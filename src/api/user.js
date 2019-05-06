@@ -23,3 +23,26 @@ export function logout() {
   })
 }
 
+export function fetchList(params) {
+  return request({
+    url: '/api/user/findMany',
+    method: 'get',
+    params: params
+  })
+}
+
+export function getRoleList() {
+  return request({
+    url: '/api/role/findAll',
+    method: 'get'
+  })
+}
+
+export function updateUser(data) {
+  return request({
+    url: '/api/user/updateUser',
+    method: 'post',
+    data: data
+  })
+}
+
