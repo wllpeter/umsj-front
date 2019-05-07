@@ -24,7 +24,7 @@
           <template slot-scope="scope">{{ scope.row.name }}</template>
         </el-table-column>
         <el-table-column label="菜单" width="220" align="center">
-          <template slot-scope="scope"><MenuTree :self-menus="scope.row.menus" /></template>
+          <template slot-scope="scope"><MenuPermission :self-menus="scope.row.menus" /></template>
         </el-table-column>
         <el-table-column label="功能权限" width="198" align="center">
           <template slot-scope="scope">
@@ -80,9 +80,9 @@
   </div>
 </template>
 <script>
+import MenuPermission from './components/MenuPermission'
 import { getRoleList } from '@/api/role'
 import { formatDate } from '@/utils/date'
-import { MenuTree } from './components/MenuTree'
 const defaultListQuery = {
   pageNum: 1,
   pageSize: 15,
@@ -91,20 +91,19 @@ const defaultListQuery = {
 }
 export default {
   name: 'RolePermission',
-  components: { MenuTree },
   filters: {
     formatCreateTime(time) {
       const date = new Date(time)
       return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
     }
   },
+  components: { MenuPermission },
   data() {
     return {
       listQuery: Object.assign({}, defaultListQuery),
       listLoading: true,
       list: null,
-      total: null,
-      menus: []
+      total: null
     }
   },
   created() {

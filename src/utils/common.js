@@ -1,30 +1,70 @@
 export const defaultRouteTree = [
     {
-        id: 1,
+        lable: '控制面板',
+        code: 'dashboard',
+        isActive: false,
+        children: []
+    },
+    {
         lable: '权限管理',
+        code: 'privilege',
+        isActive: false,
         children: [
             {
-                id: 1,
-                lable: '用户管理'
+                lable: '用户管理',
+                code: 'usersManage',
+                isActive: false
             },
             {
-                id: 1,
-                lable: '角色配置'
+                lable: '角色配置',
+                code: 'rolesManage',
+                isActive: false
             }
         ]
     },
     {
-        id: 2,
         lable: 'UDS',
+        code: 'uds',
+        isActive: false,
         children: [
             {
-                id: 1,
-                lable: '发布单管理'
+                lable: '发布单管理',
+                code: 'udsPublish',
+                isActive: false
             },
             {
-                id: 1,
-                lable: '新建发布单'
+                lable: '新建发布单',
+                code: 'udsPublishCreate',
+                isActive: false
             }
         ]
+    }
+]
+
+export const defaultActions = [
+    {
+        code: 'SYS_ADMIN',
+        lable: '系统管理权限',
+        isActive: false
+    },
+    {
+        code: 'privilege_read',
+        lable: '权限模块读权限',
+        isActive: false
+    },
+    {
+        code: 'privilege_all',
+        lable: '权限模块所有权限',
+        isActive: false
+    },
+    {
+        code: 'uds_publish',
+        lable: 'UDS 发布权限',
+        isActive: false
+    },
+    {
+        code: 'uds_apply',
+        lable: 'UDS 审核权限',
+        isActive: false
     }
 ]
