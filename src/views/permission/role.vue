@@ -12,6 +12,7 @@
         style="width: 100%;"
         border
         @selection-change="handleSelectionChange"
+        @sort-change="orderSort"
       >
         <el-table-column label="ID" sortable="custom" prop="id" width="80" align="center">
           <template slot-scope="scope">{{ scope.row.id }}</template>
@@ -107,6 +108,17 @@ export default {
     this.getList()
   },
   methods: {
+    orderSort(column) {
+      this.listQuery.pageNum = 1
+      if (column.order === 'descending') {
+        this.listQuery.sortBy = column.prop
+        this.listQuery.order = 'desc'
+      } else {
+        this.listQuery.sortBy = column.prop
+        this.listQuery.order = 'asc'
+      }
+      this.getList()
+    },
     handleResetSearch() {
       this.listQuery = Object.assign({}, defaultListQuery)
     },
