@@ -77,7 +77,7 @@ export const asyncRoutes = [
     meta: {
       title: 'permission',
       icon: 'lock',
-      roles: ['ROLE_ADMIN', 'editor'] // you can set roles in root nav
+      roles: ['privilege'] // you can set roles in root nav
     },
     children: [
       {
@@ -86,7 +86,8 @@ export const asyncRoutes = [
         name: 'UserMangement',
         meta: {
           title: 'userMangement',
-          roles: ['ROLE_ADMIN'] // or you can only set roles in sub nav
+          icon: 'user',
+          roles: ['usersManage'] // or you can only set roles in sub nav
         }
       },
       {
@@ -95,7 +96,42 @@ export const asyncRoutes = [
         name: 'RolePermission',
         meta: {
           title: 'rolePermission',
-          roles: ['ROLE_ADMIN']
+          icon: 'edit',
+          roles: ['rolesManage']
+        }
+      }
+    ]
+  },
+  {
+    path: '/uds',
+    component: Layout,
+    redirect: '/uds/index',
+    alwaysShow: true, // will always show the root menu
+    name: 'Uds',
+    meta: {
+      title: 'uds',
+      icon: 'lock',
+      roles: ['uds'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/uds/index'),
+        name: 'UdsList',
+        meta: {
+          title: 'udsMangement',
+          icon: 'list',
+          roles: ['udsPublish'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'add',
+        component: () => import('@/views/uds/add'),
+        name: 'UdsCreate',
+        meta: {
+          title: 'udsCreate',
+          icon: 'edit',
+          roles: ['udsPublishCreate']
         }
       }
     ]

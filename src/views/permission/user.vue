@@ -52,6 +52,7 @@
               :key="role.name"
               round
               type="success"
+              size="mini"
             >{{ role.name }}</el-button>
           </template>
         </el-table-column>
