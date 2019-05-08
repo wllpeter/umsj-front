@@ -19,16 +19,60 @@
   </div>
 </template>
 <script>
-import { defaultRouteTree } from '@/utils/common'
 export default {
   name: 'MenuPermission',
   props: {
-    selfMenus: Array
+    selfMenus: {
+      type: Array,
+      default: () => []
+    }
   },
   data() {
     return {
       menus: [],
-      copyMenu: []
+      copyMenu: [],
+      defaultRouteTree: [
+        {
+          lable: '控制面板',
+          code: 'dashboard',
+          isActive: false,
+          children: []
+        },
+        {
+          lable: '权限管理',
+          code: 'privilege',
+          isActive: false,
+          children: [
+            {
+              lable: '用户管理',
+              code: 'usersManage',
+              isActive: false
+            },
+            {
+              lable: '角色配置',
+              code: 'rolesManage',
+              isActive: false
+            }
+          ]
+        },
+        {
+          lable: 'UDS',
+          code: 'uds',
+          isActive: false,
+          children: [
+            {
+              lable: '发布单管理',
+              code: 'udsPublish',
+              isActive: false
+            },
+            {
+              lable: '新建发布单',
+              code: 'udsPublishCreate',
+              isActive: false
+            }
+          ]
+        }
+      ]
     }
   },
   created() {
@@ -45,12 +89,12 @@ export default {
       return flag
     },
     handleMenu() {
-      this.copyMenu = defaultRouteTree
-      const length = this.copyMenu.length
+      this.menus = this.defaultRouteTree
+      const length = this.menus.length
       for (let i = 0; i < length; i++) {
-        var item = this.copyMenu[i]
+        var item = this.menus[i]
         if (this.isExist(item.code)) {
-          this.copyMenu[i].isActive = true
+          this.menus[i].isActive = true
         }
         if (item.children && item.children.length > 0) {
           var child = item.children
@@ -61,7 +105,6 @@ export default {
           }
         }
       }
-      this.menus = this.copyMenu
     }
   }
 }
