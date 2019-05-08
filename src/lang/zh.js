@@ -6,6 +6,7 @@ export default {
     permission: '权限管理',
     rolePermission: '角色配置',
     addRole: '添加角色',
+    updateRole: '编辑角色',
     userMangement: '用户管理',
     uds: 'UDS',
     udsMangement: '发布单管理',

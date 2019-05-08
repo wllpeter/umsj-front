@@ -14,6 +14,25 @@
         <el-input v-model="roleParam.name" />
       </el-form-item>
     </el-form>
+    <div class="menu-tree">
+      <el-tree
+        :data="menuTree"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        :expand-on-click-node="false"
+      />
+    </div>
+    <div class="action-tree">
+      <el-tree
+        :data="actionTree"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        :expand-on-click-node="false"
+        :default-checked-keys="checkMenu"
+      />
+    </div>
   </div>
 </template>
 
@@ -35,7 +54,83 @@ export default {
   },
   data() {
     return {
-      roleParam: Object.assign({}, defaultRoleParam)
+      roleParam: Object.assign({}, defaultRoleParam),
+      checkAction: [],
+      checkMenu: [],
+      menuTree: [
+        {
+          id: 1,
+          label: '控制面板',
+          code: 'dashboard',
+          children: []
+        },
+        {
+          id: 2,
+          label: '权限管理',
+          code: 'privilege',
+          children: [
+            {
+              id: 5,
+              label: '用户管理',
+              code: 'usersManage'
+            },
+            {
+              id: 6,
+              label: '角色配置',
+              code: 'rolesManage'
+            }
+          ]
+        },
+        {
+          id: 3,
+          label: 'UDS',
+          code: 'uds',
+          children: [
+            {
+              id: 7,
+              label: '发布单管理',
+              code: 'udsPublish'
+            },
+            {
+              id: 8,
+              label: '新建发布单',
+              code: 'udsPublishCreate'
+            }
+          ]
+        }
+      ],
+      actionTree: [
+        {
+          id: 1,
+          label: '系统管理权限',
+          code: 'SYS_ADMIN',
+          children: []
+        },
+        {
+          id: 2,
+          label: '权限模块读权限',
+          code: 'privilege_read',
+          children: []
+        },
+        {
+          id: 3,
+          label: '权限模块所有权限',
+          code: 'privilege_all',
+          children: []
+        },
+        {
+          id: 4,
+          label: 'UDS 发布权限',
+          code: 'uds_publish',
+          children: []
+        },
+        {
+          id: 5,
+          label: 'UDS 审核权限',
+          code: 'uds_apply',
+          children: []
+        }
+      ]
     }
   },
   created() {},
@@ -44,4 +139,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

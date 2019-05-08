@@ -145,7 +145,7 @@ export default {
       })
     },
     changeRole(index, row) {
-      console.log('编辑角色')
+      this.$router.push({ path: '/permission/updateRole', query: { id: row.id }})
     },
     deleteRole(index, row) {
       console.log('删除角色')
