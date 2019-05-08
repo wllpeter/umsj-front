@@ -99,6 +99,16 @@ export const asyncRoutes = [
           icon: 'edit',
           roles: ['rolesManage']
         }
+      },
+      {
+        path: 'addRole',
+        component: () => import('@/views/permission/AddRole'),
+        name: 'AddRole',
+        hidden: true,
+        meta: {
+          title: 'addRole',
+          icon: 'edit'
+        }
       }
     ]
   },

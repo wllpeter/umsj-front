@@ -3,6 +3,7 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets" />
       <span>角色列表</span>
+      <el-button size="mini" class="btn-add-role" type="primary" @click="addRole()">添加角色</el-button>
     </el-card>
     <div class="table-container">
       <el-table
@@ -24,7 +25,9 @@
           <template slot-scope="scope">{{ scope.row.name }}</template>
         </el-table-column>
         <el-table-column label="菜单" width="220" align="center">
-          <template slot-scope="scope"><MenuPermission :self-menus="scope.row.menus" /></template>
+          <template slot-scope="scope">
+            <MenuPermission :self-menus="scope.row.menus" />
+          </template>
         </el-table-column>
         <el-table-column label="功能权限" width="198" align="center">
           <template slot-scope="scope">
@@ -51,16 +54,8 @@
         </el-table-column>
         <el-table-column label="操作" width="400" align="center">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              @click="changeRole(scope.$index, scope.row)"
-            >编辑</el-button>
-            <el-button
-              size="mini"
-              type="primary"
-              @click="deleteRole(scope.$index, scope.row)"
-            >删除</el-button>
+            <el-button size="mini" type="primary" @click="changeRole(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="mini" type="primary" @click="deleteRole(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -154,6 +149,9 @@ export default {
     },
     deleteRole(index, row) {
       console.log('删除角色')
+    },
+    addRole() {
+      this.$router.push({ path: '/permission/addRole' })
     }
   }
 }
@@ -161,5 +159,8 @@ export default {
 <style scoped>
 .input-width {
   width: 203px;
+}
+.btn-add-role {
+  float: right;
 }
 </style>
