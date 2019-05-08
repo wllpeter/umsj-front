@@ -28,7 +28,7 @@
         </el-table-column>
         <el-table-column label="功能权限" width="198" align="center">
           <template slot-scope="scope">
-            {{ scope.row.actions }}
+            <ActionsPermission :self-actions="scope.row.actions" :default-actions="defaultActions" />
           </template>
         </el-table-column>
         <el-table-column
@@ -81,8 +81,10 @@
 </template>
 <script>
 import MenuPermission from './components/MenuPermission'
+import ActionsPermission from './components/ActionsPermission'
 import { getRoleList } from '@/api/role'
 import { formatDate } from '@/utils/date'
+import { defaultActions } from '@/utils/common'
 const defaultListQuery = {
   pageNum: 1,
   pageSize: 15,
@@ -97,13 +99,14 @@ export default {
       return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
     }
   },
-  components: { MenuPermission },
+  components: { MenuPermission, ActionsPermission },
   data() {
     return {
       listQuery: Object.assign({}, defaultListQuery),
       listLoading: true,
       list: null,
-      total: null
+      total: null,
+      defaultActions: Object.assign([], defaultActions)
     }
   },
   created() {

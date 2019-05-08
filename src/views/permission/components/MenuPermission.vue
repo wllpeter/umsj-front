@@ -23,11 +23,7 @@ import { defaultRouteTree } from '@/utils/common'
 export default {
   name: 'MenuPermission',
   props: {
-    selfMenus: Array,
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
+    selfMenus: Array
   },
   data() {
     return {
@@ -51,7 +47,6 @@ export default {
     handleMenu() {
       this.copyMenu = defaultRouteTree
       const length = this.copyMenu.length
-      console.log(length)
       for (let i = 0; i < length; i++) {
         var item = this.copyMenu[i]
         if (this.isExist(item.code)) {

@@ -45,26 +45,26 @@ export const defaultActions = [
     {
         code: 'SYS_ADMIN',
         lable: '系统管理权限',
-        isActive: false
+        isActive: 'unShow'
     },
     {
         code: 'privilege_read',
         lable: '权限模块读权限',
-        isActive: false
+        isActive: 'unShow'
     },
     {
         code: 'privilege_all',
         lable: '权限模块所有权限',
-        isActive: false
+        isActive: 'unShow'
     },
     {
         code: 'uds_publish',
         lable: 'UDS 发布权限',
-        isActive: false
+        isActive: 'unShow'
     },
     {
         code: 'uds_apply',
         lable: 'UDS 审核权限',
-        isActive: false
+        isActive: 'unShow'
     }
 ]
