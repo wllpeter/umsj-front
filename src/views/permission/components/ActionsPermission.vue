@@ -37,16 +37,11 @@ export default {
     handleAtions() {
       console.log(this.defaultActions)
       console.log(this.selfActions)
-      this.actions = []
-      var [...arr2] = this.defaultActions
-      this.actions = arr2
+      this.actions = this.defaultActions
       for (let i = 0; i < this.actions.length; i++) {
-        for (let j = 0; i < this.selfActions.length; j++) {
-          if (this.actions[i].code === this.selfActions[j]) {
-            this.actions[i].isActive = 'show'
-          }
+        if (this.isExist(this.actions[i].code)) {
+          this.actions[i].isActive = 'show'
         }
-        // console.log(this.actions[i].code + this.actions[i].isActive + '后')
       }
     }
   }
