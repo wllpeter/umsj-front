@@ -77,13 +77,21 @@
 <script>
 import MenuPermission from './components/MenuPermission'
 import ActionsPermission from './components/ActionsPermission'
-import { getRoleList } from '@/api/role'
+import { getRoleList, deleteRole } from '@/api/role'
 import { formatDate } from '@/utils/date'
 const defaultListQuery = {
   pageNum: 1,
   pageSize: 15,
   sortBy: 'id',
   order: 'desc'
+}
+const defaultRoleInfo = {
+  id: 0,
+  actions: [],
+  code: '',
+  name: '',
+  menus: [],
+  subMenus: []
 }
 export default {
   name: 'RolePermission',
@@ -99,7 +107,8 @@ export default {
       listQuery: Object.assign({}, defaultListQuery),
       listLoading: true,
       list: null,
-      total: null
+      total: null,
+      roleInfo: Object.assign({}, defaultRoleInfo)
     }
   },
   created() {
@@ -148,6 +157,7 @@ export default {
       this.$router.push({
         name: 'UpdateRole',
         params: {
+          id: row.id,
           actions: row.actions,
           code: row.code,
           name: row.name,
@@ -156,7 +166,21 @@ export default {
       })
     },
     deleteRole(index, row) {
-      console.log('删除角色')
+      this.roleInfo.id = row.id
+      this.$confirm('是否要删除该角色', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteRole(this.roleInfo).then(response => {
+            this.$message({
+              message: '删除成功',
+              type: 'success',
+              duration: 1000
+            })
+              this.getList()
+          })
+        })
     },
     addRole() {
       this.$router.push({ path: '/permission/addRole' })

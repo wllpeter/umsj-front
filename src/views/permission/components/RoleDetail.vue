@@ -1,11 +1,6 @@
 <template>
   <div style="margin-top: 50px">
-    <el-form
-      :model="roleParam"
-      label-width="120px"
-      style="width: 600px"
-      size="small"
-    >
+    <el-form :model="roleParam" label-width="120px" style="width: 600px" size="small">
       <el-form-item label="角色编码(字母+下划线)">
         <el-input v-model="roleParam.code" :disabled="isEdit" />
       </el-form-item>
@@ -15,6 +10,7 @@
     </el-form>
     <div class="menu-tree">
       <el-tree
+        ref="mTree"
         :data="menuTree"
         show-checkbox
         node-key="id"
@@ -25,6 +21,7 @@
     </div>
     <div class="action-tree">
       <el-tree
+        ref="aTree"
         :data="actionTree"
         show-checkbox
         node-key="id"
@@ -33,15 +30,19 @@
         :default-checked-keys="checkAction"
       />
     </div>
+    <el-button size="mini" type="primary" @click="saveChange(isEdit)">保存</el-button>
   </div>
 </template>
 
 <script>
+import { updateRole, createRole } from '@/api/role'
 const defaultRoleParam = {
+  id: 0,
   actions: [],
   code: '',
   name: '',
-  menus: []
+  menus: [],
+  subMenus: []
 }
 export default {
   name: 'RoleDetail',
@@ -54,29 +55,36 @@ export default {
   data() {
     return {
       roleParam: Object.assign({}, defaultRoleParam),
+      postRoleParam: Object.assign({}, defaultRoleParam),
       checkAction: [],
       checkMenu: [],
+      getAction: [],
+      getMenu: [],
       menuTree: [
         {
           id: 1,
           label: '控制面板',
           code: 'dashboard',
+          parent: true,
           children: []
         },
         {
           id: 2,
           label: '权限管理',
           code: 'privilege',
+          parent: true,
           children: [
             {
               id: 5,
               label: '用户管理',
-              code: 'usersManage'
+              code: 'usersManage',
+              parent: false
             },
             {
               id: 6,
               label: '角色配置',
-              code: 'rolesManage'
+              code: 'rolesManage',
+              parent: false
             }
           ]
         },
@@ -84,16 +92,19 @@ export default {
           id: 3,
           label: 'UDS',
           code: 'uds',
+          parent: true,
           children: [
             {
               id: 7,
               label: '发布单管理',
-              code: 'udsPublish'
+              code: 'udsPublish',
+              parent: false
             },
             {
               id: 8,
               label: '新建发布单',
-              code: 'udsPublishCreate'
+              code: 'udsPublishCreate',
+              parent: false
             }
           ]
         }
@@ -134,10 +145,7 @@ export default {
   },
   created() {
     if (this.isEdit) {
-      this.roleParam.actions = this.$route.params.actions
-      this.roleParam.menus = this.$route.params.menus
-      this.roleParam.code = this.$route.params.code
-      this.roleParam.name = this.$route.params.name
+      this.roleParam = Object.assign({}, this.$route.params)
       this.handleChecked(this.$route.params)
     }
   },
@@ -179,7 +187,7 @@ export default {
           var child = item.children
           for (let j = 0; j < child.length; j++) {
             if (this.isExitMenu(child[j].code)) {
-             this.checkMenu.push(item.id)
+              this.checkMenu.push(item.id)
             }
           }
         }
@@ -191,6 +199,59 @@ export default {
       this.handleActionCheck(this.roleParam.actions)
       //  处理action check
       this.handleMenuCheck(this.roleParam.menus)
+    },
+    getCheckMenu() {
+      this.getMenu = this.$refs.mTree.getCheckedNodes()
+      const size = this.getMenu.length
+      this.postRoleParam.menus = []
+      this.postRoleParam.subMenus = []
+      for (let i = 0; i < size; i++) {
+        if (this.getMenu[i].parent) {
+          this.postRoleParam.menus.push(this.getMenu[i].code)
+        } else {
+          this.postRoleParam.subMenus.push(this.getMenu[i].code)
+        }
+      }
+      this.roleParam.menus = this.postRoleParam.menus
+      this.roleParam.subMenus = this.postRoleParam.subMenus
+    },
+    getCheckAction() {
+      this.getAction = this.$refs.aTree.getCheckedNodes()
+      const size = this.getAction.length
+      this.postRoleParam.actions = []
+      for (let i = 0; i < size; i++) {
+        this.postRoleParam.actions.push(this.getAction[i].code)
+      }
+      this.roleParam.actions = this.postRoleParam.actions
+    },
+    saveChange(isEdit) {
+      this.getCheckAction()
+      this.getCheckMenu()
+      this.$confirm('是否要保存该角色', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        if (isEdit) {
+          updateRole(this.roleParam).then(response => {
+            this.$message({
+              type: 'success',
+              message: '提交成功',
+              duration: 1000
+            })
+            this.$router.push({ path: '/permission/role' })
+          })
+        } else {
+          createRole(this.roleParam).then(response => {
+            this.$message({
+              type: 'success',
+              message: '提交成功',
+              duration: 1000
+            })
+            this.$router.push({ path: '/permission/role' })
+          })
+        }
+      })
     }
   }
 }
