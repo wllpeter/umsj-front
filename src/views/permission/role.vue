@@ -15,21 +15,21 @@
         @selection-change="handleSelectionChange"
         @sort-change="orderSort"
       >
-        <el-table-column label="ID" sortable="custom" prop="id" width="80" align="center">
+        <el-table-column label="ID" sortable="custom" prop="id" width="70" align="center">
           <template slot-scope="scope">{{ scope.row.id }}</template>
         </el-table-column>
         <el-table-column label="角色编码" width="180" align="center">
           <template slot-scope="scope">{{ scope.row.code }}</template>
         </el-table-column>
-        <el-table-column label="角色名称" width="180" align="center">
+        <el-table-column label="角色名称" align="center">
           <template slot-scope="scope">{{ scope.row.name }}</template>
         </el-table-column>
-        <el-table-column label="菜单" width="220" align="center">
+        <el-table-column label="菜单" width="250" align="center">
           <template slot-scope="scope">
             <MenuPermission :self-menus="scope.row.menus" />
           </template>
         </el-table-column>
-        <el-table-column label="功能权限" width="198" align="center">
+        <el-table-column label="功能权限" width="250" align="center">
           <template slot-scope="scope">
             <ActionsPermission :self-actions="scope.row.actions" />
           </template>
@@ -52,7 +52,7 @@
         >
           <template slot-scope="scope">{{ scope.row.updatedAt | formatCreateTime }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="400" align="center">
+        <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
             <el-button :disabled="havaPermission" size="mini" type="primary" @click="changeRole(scope.$index, scope.row)">编辑</el-button>
             <el-button :disabled="havaPermission" size="mini" type="primary" @click="deleteRole(scope.$index, scope.row)">删除</el-button>

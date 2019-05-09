@@ -45,7 +45,7 @@
         <el-table-column label="部门" width="300" align="center">
           <template slot-scope="scope">{{ scope.row.department }}</template>
         </el-table-column>
-        <el-table-column label="角色" width="210" align="center">
+        <el-table-column label="角色" align="center">
           <template slot-scope="scope">
             <RoleButton :role-list="scope.row.roleItems" />
           </template>
