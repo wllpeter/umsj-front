@@ -41,7 +41,7 @@
           prop="created_at"
           align="center"
         >
-          <template slot-scope="scope">{{ scope.row.createdAt | formatCreateTime }}</template>
+          <template slot-scope="scope">{{ scope.row.createdAt }}</template>
         </el-table-column>
         <el-table-column
           label="更新日期"
@@ -50,7 +50,7 @@
           prop="updated_at"
           align="center"
         >
-          <template slot-scope="scope">{{ scope.row.updatedAt | formatCreateTime }}</template>
+          <template slot-scope="scope">{{ scope.row.updatedAt }}</template>
         </el-table-column>
         <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
