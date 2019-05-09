@@ -47,13 +47,7 @@
         </el-table-column>
         <el-table-column label="角色" width="198" align="center">
           <template slot-scope="scope">
-            <el-button
-              v-for="role in scope.row.roleItems"
-              :key="role.name"
-              round
-              type="success"
-              size="mini"
-            >{{ role.name }}</el-button>
+            <RoleButton :role-list="scope.row.roleItems" />
           </template>
         </el-table-column>
         <el-table-column
@@ -115,6 +109,7 @@
 <script>
 import { fetchList, getRoleList, updateUser } from '@/api/user'
 import { formatDate } from '@/utils/date'
+import RoleButton from './components/RoleButton'
 const defaultListQuery = {
   pageNum: 1,
   pageSize: 15,
@@ -134,6 +129,7 @@ export default {
       return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
     }
   },
+  components: { RoleButton },
   data() {
     return {
       listQuery: Object.assign({}, defaultListQuery),
