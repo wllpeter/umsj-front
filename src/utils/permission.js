@@ -26,7 +26,6 @@ export default function checkPermission(value) {
 
 export function judgeAction(defaultPermission) {
   const haveActions = store.getters && store.getters.actions
-  console.log(store.getters.actions)
   let result = true
   for (let i = 0; i < defaultPermission.length; i++) {
     for (let j = 0; j < haveActions.length; j++) {

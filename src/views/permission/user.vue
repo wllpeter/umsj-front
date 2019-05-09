@@ -94,11 +94,11 @@
     </div>
     <el-dialog :title="title" :visible.sync="dialogVisible" width="30%">
       <el-checkbox-group v-model="selfRole">
-        <el-checkbox
-          v-for="role in checkedRoles"
-          :key="role.name"
-          :label="role.code"
-        >{{ role.name }}</el-checkbox>
+        <ul v-for="role in checkedRoles" :key="role.name">
+          <li>
+            <el-checkbox :label="role.code">{{ role.name }}</el-checkbox>
+          </li>
+        </ul>
       </el-checkbox-group>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -217,7 +217,7 @@ export default {
           message: '更新成功',
           duration: 1000
         })
-        this.$router.back()
+        this.getList()
       })
       this.dialogVisible = false
       console.log(this.selfRole)
@@ -228,5 +228,8 @@ export default {
 <style scoped>
 .input-width {
   width: 203px;
+}
+li {
+  list-style: none;
 }
 </style>
