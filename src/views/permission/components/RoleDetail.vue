@@ -236,7 +236,7 @@ export default {
           updateRole(this.roleParam).then(response => {
             this.$message({
               type: 'success',
-              message: '提交成功',
+              message: '更新成功',
               duration: 1000
             })
             this.$router.push({ path: '/permission/role' })
@@ -245,7 +245,7 @@ export default {
           createRole(this.roleParam).then(response => {
             this.$message({
               type: 'success',
-              message: '提交成功',
+              message: '新增成功',
               duration: 1000
             })
             this.$router.push({ path: '/permission/role' })
