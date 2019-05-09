@@ -42,17 +42,17 @@
         <el-table-column label="姓名" width="180" align="center">
           <template slot-scope="scope">{{ scope.row.fullName }}</template>
         </el-table-column>
-        <el-table-column label="部门" width="220" align="center">
+        <el-table-column label="部门" width="300" align="center">
           <template slot-scope="scope">{{ scope.row.department }}</template>
         </el-table-column>
-        <el-table-column label="角色" width="198" align="center">
+        <el-table-column label="角色" width="210" align="center">
           <template slot-scope="scope">
             <RoleButton :role-list="scope.row.roleItems" />
           </template>
         </el-table-column>
         <el-table-column
           label="创建日期"
-          width="240"
+          width="249"
           sortable="custom"
           prop="created_at"
           align="center"
@@ -61,14 +61,14 @@
         </el-table-column>
         <el-table-column
           label="更新日期"
-          width="240"
+          width="249"
           sortable="custom"
           prop="updated_at"
           align="center"
         >
           <template slot-scope="scope">{{ scope.row.updatedAt | formatCreateTime }}</template>
         </el-table-column>
-        <el-table-column label="操作" width="400" align="center">
+        <el-table-column label="操作" width="220" align="center">
           <template slot-scope="scope">
             <el-button
               :disabled="havaPermission"
