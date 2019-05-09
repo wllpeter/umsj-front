@@ -71,6 +71,7 @@
         <el-table-column label="操作" width="400" align="center">
           <template slot-scope="scope">
             <el-button
+              :disabled="havaPermission"
               size="mini"
               type="primary"
               @click="changeUserRole(scope.$index, scope.row)"
@@ -109,6 +110,7 @@
 <script>
 import { fetchList, getRoleList, updateUser } from '@/api/user'
 import { formatDate } from '@/utils/date'
+import { judgeAction } from '@/utils/permission'
 import RoleButton from './components/RoleButton'
 const defaultListQuery = {
   pageNum: 1,
@@ -141,6 +143,9 @@ export default {
       userInfo: Object.assign({}, defaultUserInfo),
       title: '',
       selfRole: [],
+      havaPermission: true,
+      defaultPermission: ['SYS_ADMIN', 'privilege_all'],
+      haveActions: [],
       userRole: {
         id: 0,
         roleCodes: []
@@ -149,6 +154,7 @@ export default {
   },
   created() {
     this.getList()
+    this.havaPermission = judgeAction(this.defaultPermission)
   },
   methods: {
     orderSort(column) {

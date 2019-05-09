@@ -3,7 +3,7 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets" />
       <span>角色列表</span>
-      <el-button size="mini" class="btn-add-role" type="primary" @click="addRole()">添加角色</el-button>
+      <el-button :disabled="havaPermission" size="mini" class="btn-add-role" type="primary" @click="addRole()">添加角色</el-button>
     </el-card>
     <div class="table-container">
       <el-table
@@ -54,8 +54,8 @@
         </el-table-column>
         <el-table-column label="操作" width="400" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="changeRole(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="primary" @click="deleteRole(scope.$index, scope.row)">删除</el-button>
+            <el-button :disabled="havaPermission" size="mini" type="primary" @click="changeRole(scope.$index, scope.row)">编辑</el-button>
+            <el-button :disabled="havaPermission" size="mini" type="primary" @click="deleteRole(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -78,6 +78,7 @@
 import MenuPermission from './components/MenuPermission'
 import ActionsPermission from './components/ActionsPermission'
 import { getRoleList, deleteRole } from '@/api/role'
+import { judgeAction } from '@/utils/permission'
 import { formatDate } from '@/utils/date'
 const defaultListQuery = {
   pageNum: 1,
@@ -108,11 +109,14 @@ export default {
       listLoading: true,
       list: null,
       total: null,
+      havaPermission: true,
+      defaultPermission: ['SYS_ADMIN', 'privilege_all'],
       roleInfo: Object.assign({}, defaultRoleInfo)
     }
   },
   created() {
     this.getList()
+    this.havaPermission = judgeAction(this.defaultPermission)
   },
   methods: {
     orderSort(column) {
