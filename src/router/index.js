@@ -137,7 +137,7 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/uds/index'),
-        name: 'UdsList',
+        name: 'UdsMangement',
         meta: {
           title: 'udsMangement',
           icon: 'list',
