@@ -187,18 +187,17 @@ export default {
       return flag
     },
     handleMenuCheck(items) {
-      this.menus = this.defaultRouteTree
       const length = this.menuTree.length
       for (let i = 0; i < length; i++) {
         var item = this.menuTree[i]
-        if (this.isExitMenu(item.code)) {
+        if (this.isExitMenu(item.code) && item.children.length === 0) {
           this.checkMenu.push(item.id)
         }
         if (item.children && item.children.length > 0) {
           var child = item.children
           for (let j = 0; j < child.length; j++) {
             if (this.isExitMenu(child[j].code)) {
-              this.checkMenu.push(item.id)
+              this.checkMenu.push(child[j].id)
             }
           }
         }
@@ -208,7 +207,7 @@ export default {
       this.roleParam = params
       //  处理action check
       this.handleActionCheck(this.roleParam.actions)
-      //  处理action check
+      //  处理menu check
       this.handleMenuCheck(this.roleParam.menus)
     },
     getCheckMenu() {
@@ -216,6 +215,12 @@ export default {
       const size = this.getMenu.length
       this.postRoleParam.menus = []
       this.postRoleParam.subMenus = []
+      const halfSize = this.$refs.mTree.getHalfCheckedNodes().length
+      if (halfSize > 0) {
+        for (let i = 0; i < halfSize; i++) {
+          this.postRoleParam.menus.push(this.$refs.mTree.getHalfCheckedNodes()[i].code)
+        }
+      }
       for (let i = 0; i < size; i++) {
         if (this.getMenu[i].parent) {
           this.postRoleParam.menus.push(this.getMenu[i].code)
