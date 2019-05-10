@@ -93,7 +93,7 @@
         layout="total, sizes,prev, pager, next,jumper"
         :page-size="listQuery.pageSize"
         :total="total"
-        :page-sizes="[15,20,30]"
+        :page-sizes="[1,2,3]"
         :current-page.sync="listQuery.pageNum"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
@@ -105,7 +105,7 @@
 import { fetchList } from '@/api/uds'
 const defaultListQuery = {
   pageNum: 1,
-  pageSize: 15,
+  pageSize: 1,
   sortBy: 'id',
   order: 'desc',
   applyUser: '',
@@ -122,6 +122,7 @@ export default {
       listLoading: true,
       list: null,
       total: 0,
+      value: 0,
       options: [
         {
           value: '未审核',
