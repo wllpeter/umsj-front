@@ -62,7 +62,7 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { roles, username, menus, actions } = data
+        const { roles, fullName, menus, actions } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
@@ -70,7 +70,7 @@ const actions = {
         }
 
         commit('SET_ROLES', roles)
-        commit('SET_NAME', username)
+        commit('SET_NAME', fullName)
         commit('SET_MENUS', menus)
         commit('SET_ACTIONS', actions)
         // commit('SET_AVATAR', avatar)
