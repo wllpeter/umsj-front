@@ -11,13 +11,13 @@
           @click="handleResetSearch()"
         >重置</el-button>
       </div>
-      <div style="margin-top: 15px">
+      <div style="margin-top: 20px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
           <el-form-item label="主题：">
             <el-input v-model="listQuery.title" class="input-width" placeholder="主题" />
           </el-form-item>
           <el-form-item label="JIRA 单号：">
-            <el-input v-model="listQuery.jiraId" class="input-width" placeholder="主题" />
+            <el-input v-model="listQuery.jiraId" class="input-width" placeholder="JIRA 单号" />
           </el-form-item>
           <el-form-item label="发布者：">
             <el-input v-model="listQuery.publishUser" class="input-width" placeholder="发布者" />
@@ -93,7 +93,7 @@
         layout="total, sizes,prev, pager, next,jumper"
         :page-size="listQuery.pageSize"
         :total="total"
-        :page-sizes="[1,2,3]"
+        :page-sizes="[15,20,30]"
         :current-page.sync="listQuery.pageNum"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
@@ -105,7 +105,7 @@
 import { fetchList } from '@/api/uds'
 const defaultListQuery = {
   pageNum: 1,
-  pageSize: 1,
+  pageSize: 15,
   sortBy: 'id',
   order: 'desc',
   applyUser: '',
@@ -122,19 +122,43 @@ export default {
       listLoading: true,
       list: null,
       total: 0,
-      value: 0,
+      value: null,
       options: [
         {
-          value: '未审核',
+          value: '全部状态',
           lable: 0
         },
         {
-          value: '审核中',
+          value: '新建',
           lable: 1
         },
         {
-          value: '完成',
+          value: '待审核',
           lable: 2
+        },
+        {
+          value: '审核通过',
+          lable: 3
+        },
+        {
+          value: '审核不通过',
+          lable: 4
+        },
+        {
+          value: '发布成功',
+          lable: 5
+        },
+        {
+          value: '发布失败',
+          lable: 6
+        },
+        {
+          value: '取消发布',
+          lable: 7
+        },
+        {
+          value: '发布中',
+          lable: 8
         }
       ]
     }
