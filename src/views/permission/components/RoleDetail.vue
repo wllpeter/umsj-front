@@ -1,9 +1,9 @@
 <template>
-  <div style="margin-top: 10px">
-    <div>
+  <div class="role-detail-container">
+    <div class="role-header">
       <h3 v-if="isEdit">编辑角色</h3>
       <h3 v-else>添加角色</h3>
-      <el-form :model="roleParam" label-width="120px" style="width: 600px" size="small">
+      <el-form :model="roleParam" label-width="160px" :label-position="labelPosition" style="width: 600px" size="small">
         <el-form-item label="角色编码(字母+下划线)">
           <el-input v-model="roleParam.code" :disabled="isEdit" />
         </el-form-item>
@@ -12,32 +12,34 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="menu-tree">
-      <h4>角色菜单</h4>
-      <el-tree
-        ref="mTree"
-        :data="menuTree"
-        show-checkbox
-        node-key="id"
-        default-expand-all
-        :expand-on-click-node="false"
-        :default-checked-keys="checkMenu"
-      />
+    <div class="role-body">
+      <div class="menu-tree">
+        <h4>角色菜单</h4>
+        <el-tree
+          ref="mTree"
+          :data="menuTree"
+          show-checkbox
+          node-key="id"
+          default-expand-all
+          :expand-on-click-node="false"
+          :default-checked-keys="checkMenu"
+        />
+      </div>
+      <div class="action-tree">
+        <h4>操作权限</h4>
+        <el-tree
+          ref="aTree"
+          :data="actionTree"
+          show-checkbox
+          node-key="id"
+          default-expand-all
+          :expand-on-click-node="false"
+          :default-checked-keys="checkAction"
+        />
+      </div>
     </div>
-    <div class="action-tree">
-      <h4>操作权限</h4>
-      <el-tree
-        ref="aTree"
-        :data="actionTree"
-        show-checkbox
-        node-key="id"
-        default-expand-all
-        :expand-on-click-node="false"
-        :default-checked-keys="checkAction"
-      />
-    </div>
-    <div>
-      <el-button size="mini" type="primary" @click="saveChange(isEdit)">保存</el-button>
+    <div class="role-footer">
+      <el-button class="role-footer-button" size="mini" type="primary" @click="saveChange(isEdit)">保存</el-button>
     </div>
   </div>
 </template>
@@ -62,6 +64,7 @@ export default {
   },
   data() {
     return {
+      labelPosition: 'left',
       roleParam: Object.assign({}, defaultRoleParam),
       postRoleParam: Object.assign({}, defaultRoleParam),
       checkAction: [],
@@ -265,5 +268,31 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .role-detail-container {
+    margin-top: 10px;
+    margin-left: 10px
+  }
+  .role-header {
+    margin-top: 15px;
+    width: 100%
+  }
+  .role-body {
+    margin-top: 15px;
+    width: 50%;
+    display: flex;
+    .menu-tree {
+      flex: 1
+    }
+    .action-tree {
+      flex: 1
+    }
+  }
+  .role-footer {
+    width: 50%;
+    margin-top: 15px;
+    .role-footer-button {
+      margin-left: 25%
+    }
+  }
 </style>
