@@ -3,16 +3,19 @@
     <div class="create-publish-form">
       <h3>新建发布单</h3>
       <el-form
-        label-width="160px"
+        ref="postParams"
+        :model="postParams"
+        :rules="rules"
+        label-width="220px"
         :label-position="labelPosition"
-        style="width: 600px"
-        size="small"
+        style="width: 800px"
+        size="medium"
       >
-        <el-form-item label="上线原因">
+        <el-form-item label="上线原因" prop="title">
           <el-input v-model="postParams.title" placeholder="本次的发布主题" />
         </el-form-item>
-        <el-form-item label="JIRA单号">
-          <el-input v-model="postParams.jiraId" autosize />
+        <el-form-item label="JIRA单号" prop="jiraId">
+          <el-input v-model="postParams.jiraId" />
         </el-form-item>
         <el-form-item label="是否涉及核心数据">
           <el-select v-model="dataValue">
@@ -24,8 +27,8 @@
             />
           </el-select>
         </el-form-item>
-        <div>
-          <el-form-item label="代码类型">
+        <div class="select-type">
+          <el-form-item label="代码类型" prop="codeType">
             <el-select v-model="codeValue">
               <el-option
                 v-for="item in codeTypes"
@@ -34,15 +37,17 @@
                 :value="item.value"
               />
             </el-select>
+            <el-button type="primary" icon="el-icon-plus" size="mini" class="select-type-button" circle @click="addModule()" />
           </el-form-item>
-          <el-form-item label="代码分支路径">
+          <el-form-item label="代码分支路径" prop="path">
             <el-input v-model="postParams.path" type="textarea" />
           </el-form-item>
         </div>
+        <div v-for="n in size" :key="n"><add-module @delteMoudle="delteMoudle" /></div>
         <el-form-item label="影响数据">
           <el-input v-model="postParams.influenceData" />
         </el-form-item>
-        <el-form-item label="ReviewBoard 地址">
+        <el-form-item label="ReviewBoard 地址" prop="address">
           <el-input v-model="postParams.address" />
         </el-form-item>
         <el-form-item label="上线步骤说明">
@@ -52,12 +57,12 @@
           <el-input v-model="postParams.back" type="textarea" />
         </el-form-item>
       </el-form>
-      <el-button size="mini" type="primary">保存发布单</el-button>
+      <div class="create-publish-form-button"><el-button type="primary">保存发布单</el-button></div>
     </div>
     <div class="create-publish-tip">
       <h3>提示</h3>
       <ol>
-        <li>发布单中带 的为必填项；</li>
+        <li>发布单中带<div class="create-publish-tip-star">*</div>的为必填项；</li>
         <li>如有操作上的疑问，<a href="http://wiki.tuniu.org/pages/viewpage.action?pageId=101177636" style="color: #72AFD2">请点击这里查看帮助文档；</a></li>
       </ol>
       <h4>发布时间</h4>
@@ -70,6 +75,7 @@
   </div>
 </template>
 <script>
+import AddModule from './components/AddModule'
 const defaultPostParams = {
   applyUser: '',
   jiraId: '',
@@ -84,12 +90,14 @@ const defaultPostParams = {
 }
 export default {
   name: 'UdsCreate',
+  components: { AddModule },
   data() {
     return {
       postParams: Object.assign({}, defaultPostParams),
-      labelPosition: 'left',
+      labelPosition: 'right',
       dataValue: '',
       codeValue: '',
+      size: 0,
       options: [
         {
           value: 0,
@@ -113,14 +121,38 @@ export default {
           value: 2,
           label: 'jar 文件'
         }
-      ]
+      ],
+      rules: {
+        title: [
+          { required: true, message: '请填写 上线原因', trigger: 'blur' }
+        ],
+        jiraId: [
+          { required: true, message: '请填写 jira链接', trigger: 'blur' }
+        ],
+        codeType: [
+          { required: true, message: '请选择 代码类型', trigger: 'blur' }
+        ],
+        path: [
+          { required: true, message: '请填写 代码分支路径', trigger: 'blur' }
+        ],
+        address: [
+          { required: true, message: '请填写 ReviewBoard 地址', trigger: 'blur' }
+        ]
+      }
     }
   },
   created() {
     this.dataValue = this.options[0].value
     this.codeValue = this.codeTypes[0].value
   },
-  methods: {}
+  methods: {
+    addModule() {
+      this.size += 1
+    },
+    delteMoudle() {
+      this.size -= 1
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -132,10 +164,25 @@ export default {
   .create-publish-form {
     margin-left: 10px;
     width: 56%;
+    .select-type {
+      background-color: #F5F5F5;
+      border: 1px solid #E3E3E3;
+      .select-type-button {
+        float: right;
+      }
+    }
+    .create-publish-form-button {
+      width: 100%;
+      margin-left: 25%
+    }
   }
   .create-publish-tip {
     margin-left: 10px;
     width: 39%;
+    .create-publish-tip-star {
+      color: #ff4949;
+      display: inline;
+    }
   }
 }
 </style>
