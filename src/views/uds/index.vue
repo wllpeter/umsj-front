@@ -125,45 +125,46 @@ export default {
       value: null,
       options: [
         {
-          value: '全部状态',
-          lable: 0
+          value: 0,
+          label: '全部状态'
         },
         {
-          value: '新建',
-          lable: 1
+          value: 1,
+          label: '新建'
         },
         {
-          value: '待审核',
-          lable: 2
+          value: 2,
+          label: '待审核'
         },
         {
-          value: '审核通过',
-          lable: 3
+          value: 3,
+          label: '审核通过'
         },
         {
-          value: '审核不通过',
-          lable: 4
+          value: 4,
+          label: '审核不通过'
         },
         {
-          value: '发布成功',
-          lable: 5
+          value: 5,
+          label: '发布成功'
         },
         {
-          value: '发布失败',
-          lable: 6
+          value: 6,
+          label: '发布失败'
         },
         {
-          value: '取消发布',
-          lable: 7
+          value: 7,
+          label: '取消发布'
         },
         {
-          value: '发布中',
-          lable: 8
+          value: 8,
+          label: '发布中'
         }
       ]
     }
   },
   created() {
+    this.value = this.options[0].value
     this.getList()
   },
   methods: {
