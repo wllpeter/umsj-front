@@ -1,7 +1,7 @@
 <template>
   <div class="select-type">
     <el-form-item label="代码类型" prop="codeType">
-      <el-select v-model="codeValue">
+      <el-select v-model="selectCodeType" @change="changeType">
         <el-option
           v-for="item in codeTypes"
           :key="item.value"
@@ -19,17 +19,34 @@
       />
     </el-form-item>
     <el-form-item label="代码分支路径" prop="path">
-      <el-input v-model="path" type="textarea" />
+      <el-input v-model="selectPath" type="textarea" @change="changePath" />
     </el-form-item>
   </div>
 </template>
 <script>
 export default {
   name: 'AddModule',
+  props: {
+    index: {
+        type: Number,
+        default: 0
+    },
+    moduleCodeType: {
+        type: Number,
+        default: 0
+    },
+    modulePath: {
+        type: String,
+        default: ''
+    }
+  },
   data() {
     return {
       codeValue: 0,
       path: '',
+      num: 0,
+      selectCodeType: '',
+      selectPath: '',
       codeTypes: [
         {
           value: 0,
@@ -46,7 +63,14 @@ export default {
       ]
     }
   },
-  created() {},
+  created() {
+      this.selectCodeType = this.moduleCodeType
+      this.selectPath = this.modulePath
+      this.num = this.index
+      console.log('child init')
+      console.log('child num ' + this.num)
+      console.log('child index ' + this.index)
+  },
   methods: {
       delteMoudle() {
           this.$confirm('确定移除该发布项吗？', '提示', {
@@ -54,8 +78,17 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$emit('delteMoudle')
+          console.log('child 删除 ')
+          console.log('child num ' + this.num)
+          console.log('child index ' + this.index)
+          this.$emit('delteMoudle', this.num)
         })
+      },
+      changePath() {
+          this.$emit('changePath', this.num, this.selectPath)
+      },
+      changeType() {
+          this.$emit('changeType', this.num, this.selectCodeType)
       }
   }
 }

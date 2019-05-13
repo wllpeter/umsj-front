@@ -37,13 +37,29 @@
                 :value="item.value"
               />
             </el-select>
-            <el-button type="primary" icon="el-icon-plus" size="mini" class="select-type-button" circle @click="addModule()" />
+            <el-button
+              type="primary"
+              icon="el-icon-plus"
+              size="mini"
+              class="select-type-button"
+              circle
+              @click="addModule()"
+            />
           </el-form-item>
           <el-form-item label="代码分支路径" prop="path">
             <el-input v-model="postParams.path" type="textarea" />
           </el-form-item>
         </div>
-        <div v-for="n in size" :key="n"><add-module @delteMoudle="delteMoudle" /></div>
+        <div v-for="n in modules" :key="n">
+          <add-module
+            :index="size"
+            :module-code-type="types[n]"
+            :module-path="paths[n]"
+            @delteMoudle="delteMoudle"
+            @changePath="changePath"
+            @changeType="changeType"
+          />
+        </div>
         <el-form-item label="影响数据">
           <el-input v-model="postParams.influenceData" />
         </el-form-item>
@@ -57,18 +73,35 @@
           <el-input v-model="postParams.back" type="textarea" />
         </el-form-item>
       </el-form>
-      <div class="create-publish-form-button"><el-button type="primary">保存发布单</el-button></div>
+      <div class="create-publish-form-button">
+        <el-button type="primary">保存发布单</el-button>
+      </div>
     </div>
     <div class="create-publish-tip">
       <h3>提示</h3>
       <ol>
-        <li>发布单中带<div class="create-publish-tip-star">*</div>的为必填项；</li>
-        <li>如有操作上的疑问，<a href="http://wiki.tuniu.org/pages/viewpage.action?pageId=101177636" style="color: #72AFD2">请点击这里查看帮助文档；</a></li>
+        <li>
+          发布单中带
+          <div class="create-publish-tip-star">*</div>的为必填项；
+        </li>
+        <li>
+          如有操作上的疑问，
+          <a
+            href="http://wiki.tuniu.org/pages/viewpage.action?pageId=101177636"
+            style="color: #72AFD2"
+          >请点击这里查看帮助文档；</a>
+        </li>
       </ol>
       <h4>发布时间</h4>
       <ol>
         <li>日常发布：每周一、三、五全天可发布；</li>
-        <li>紧急发布：非日常发布时间段；参见<a href="http://wiki.tuniu.org/pages/viewpage.action?pageId=62259972" style="color: #72AFD2">数据开发后台上线发布流程。</a></li>
+        <li>
+          紧急发布：非日常发布时间段；参见
+          <a
+            href="http://wiki.tuniu.org/pages/viewpage.action?pageId=62259972"
+            style="color: #72AFD2"
+          >数据开发后台上线发布流程。</a>
+        </li>
         <li>审核时间：工作日 09:00~18:00；</li>
       </ol>
     </div>
@@ -98,6 +131,9 @@ export default {
       dataValue: '',
       codeValue: '',
       size: 0,
+      modules: [],
+      types: [],
+      paths: [],
       options: [
         {
           value: 0,
@@ -136,7 +172,11 @@ export default {
           { required: true, message: '请填写 代码分支路径', trigger: 'blur' }
         ],
         address: [
-          { required: true, message: '请填写 ReviewBoard 地址', trigger: 'blur' }
+          {
+            required: true,
+            message: '请填写 ReviewBoard 地址',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -147,10 +187,45 @@ export default {
   },
   methods: {
     addModule() {
+      console.log('parent add ')
       this.size += 1
+      // 初始化
+      this.modules.push(this.size)
+      this.types.push(this.codeTypes[0].value)
+      this.paths.push('')
+      console.log(this.size)
+      console.log(this.modules)
+      console.log(this.types)
+      console.log(this.paths)
     },
-    delteMoudle() {
+    delteMoudle(num) {
+      console.log('parent 删除 ' + num)
       this.size -= 1
+      const start = this.modules.indexOf(num)
+      console.log('start ' + start)
+      if (start > -1) {
+        this.modules.splice(start, 1)
+        this.types.splice(start, 1)
+        this.paths.splice(start, 1)
+      }
+      console.log(this.size)
+      console.log(this.modules)
+      console.log(this.types)
+      console.log(this.paths)
+    },
+    changePath(num, path) {
+      const start = this.modules.indexOf(num)
+      if (start > -1) {
+        this.paths[start] = path
+      }
+      console.log(this.paths)
+    },
+    changeType(num, type) {
+      const start = this.modules.indexOf(num)
+      if (start > -1) {
+        this.types[start] = type
+      }
+      console.log(this.types)
     }
   }
 }
@@ -165,15 +240,15 @@ export default {
     margin-left: 10px;
     width: 56%;
     .select-type {
-      background-color: #F5F5F5;
-      border: 1px solid #E3E3E3;
+      background-color: #f5f5f5;
+      border: 1px solid #e3e3e3;
       .select-type-button {
         float: right;
       }
     }
     .create-publish-form-button {
       width: 100%;
-      margin-left: 25%
+      margin-left: 25%;
     }
   }
   .create-publish-tip {
