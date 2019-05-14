@@ -50,7 +50,7 @@
           <el-input v-model="postParams.codePath" type="textarea" />
         </el-form-item>
       </div>
-      <div v-for="(item, index) in moduleInfo" :key="index">
+      <div v-for="(item, index) in moduleInfo" :key="item.id">
         <add-module
           :index="index"
           :module-code-type="item.childType"
@@ -172,14 +172,17 @@ export default {
   },
   methods: {
     handleParams() {
-      this.postParams.codePaths.push(this.postParams.codePath)
-      this.postParams.codeTypes.push(this.postParams.codeType)
-      const len = this.paths.length
-      if (this.paths && len > 0) {
-        for (let i = 0; i < len; i++) {
-          this.postParams.codePaths.push(this.paths[i])
-          this.postParams.codeTypes.push(this.types[i])
-        }
+      const itemList = {
+        codePath: '',
+        codeType: ''
+      }
+      itemList.codePath = this.postParams.codePath
+      itemList.codeType = this.postParams.codeType
+      this.postParams.udsPublishItemList.push(itemList)
+      for (let i = 0; i < this.moduleInfo.length; i++) {
+        itemList.codePath = this.moduleInfo[i].childPath
+        itemList.codeType = this.moduleInfo[i].childType
+        this.postParams.udsPublishItemList.push(itemList)
       }
     },
     savePulish() {
@@ -202,34 +205,35 @@ export default {
     addModule() {
       const defaultModuleInfo = {
         childType: 'sh',
+        id: this.size,
         childPath: ''
       }
       defaultModuleInfo.childType = 'sh'
       defaultModuleInfo.childPath = ''
       this.moduleInfo.push(defaultModuleInfo)
       this.size = this.size + 1
-      console.log('this.moduleInfo ' + this.moduleInfo.length)
+      // console.log('this.moduleInfo ' + this.moduleInfo.length)
       this.moduleInfo.forEach(item => { console.log(item.childType + '  ' + item.childPath) })
     },
     delteMoudle(num) {
-      console.log('删除：')
-      console.log(num)
-      this.size = this.size - 1
+      // console.log('删除：')
+      // console.log(num)
+      // this.size = this.size - 1
       this.moduleInfo.splice(num, 1)
       this.moduleInfo.forEach(item => { console.log(item.childType + '  ' + item.childPath) })
-      console.log('this.moduleInfo ' + this.moduleInfo.length)
+      // console.log('this.moduleInfo ' + this.moduleInfo.length)
     },
     changePath(num, path) {
-      console.log('num ' + num)
+      // console.log('num ' + num)
       this.moduleInfo[num].childPath = path
       this.moduleInfo.forEach(item => { console.log(item.childType + '  ' + item.childPath) })
-      console.log('len ' + this.moduleInfo.length)
+      // console.log('len ' + this.moduleInfo.length)
     },
     changeType(num, type) {
-      console.log('num ' + num)
+      // console.log('num ' + num)
       this.moduleInfo[num].childType = type
       this.moduleInfo.forEach(item => { console.log(item.childType + '  ' + item.childPath) })
-      console.log('len ' + this.moduleInfo.length)
+      // console.log('len ' + this.moduleInfo.length)
     }
   }
 }

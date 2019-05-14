@@ -68,7 +68,7 @@ export default {
   },
   methods: {
       delteMoudle() {
-         console.log('delete module ' + this.index)
+        //  console.log('delete module ' + this.index)
           this.$confirm('确定移除该发布项吗？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
