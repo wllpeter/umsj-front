@@ -76,7 +76,7 @@ export const asyncRoutes = [
     name: 'Permission',
     meta: {
       title: 'permission',
-      icon: 'lock',
+      icon: 'permission',
       roles: ['privilege'] // you can set roles in root nav
     },
     children: [
@@ -86,7 +86,7 @@ export const asyncRoutes = [
         name: 'UserMangement',
         meta: {
           title: 'userMangement',
-          icon: 'user',
+          icon: 'user-manage',
           roles: ['usersManage'] // or you can only set roles in sub nav
         }
       },
@@ -96,7 +96,7 @@ export const asyncRoutes = [
         name: 'RolePermission',
         meta: {
           title: 'rolePermission',
-          icon: 'edit',
+          icon: 'user-edit',
           roles: ['rolesManage']
         }
       },
@@ -130,7 +130,7 @@ export const asyncRoutes = [
     name: 'Uds',
     meta: {
       title: 'uds',
-      icon: 'lock',
+      icon: 'uds',
       roles: ['uds'] // you can set roles in root nav
     },
     children: [
@@ -140,7 +140,7 @@ export const asyncRoutes = [
         name: 'UdsMangement',
         meta: {
           title: 'udsMangement',
-          icon: 'list',
+          icon: 'uds-list',
           roles: ['udsPublish'] // or you can only set roles in sub nav
         }
       },
@@ -150,7 +150,7 @@ export const asyncRoutes = [
         name: 'UdsCreate',
         meta: {
           title: 'udsCreate',
-          icon: 'edit',
+          icon: 'add-uds',
           roles: ['udsPublishCreate']
         }
       }

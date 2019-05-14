@@ -26,7 +26,7 @@
             <el-input v-model="listQuery.applyUser" class="input-width" placeholder="审核者" />
           </el-form-item>
           <el-form-item>
-            <el-select v-model="value" placeholder="全部状态">
+            <el-select v-model="listQuery.status" placeholder="全部状态">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -202,6 +202,9 @@ export default {
       console.log('lookUdsInfo')
     },
     getList() {
+      if (this.listQuery.status === 0) {
+        this.listQuery.status = null
+      }
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.listLoading = false
