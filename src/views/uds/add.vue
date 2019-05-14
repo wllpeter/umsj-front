@@ -18,7 +18,7 @@
           <el-input v-model="postParams.jiraId" />
         </el-form-item>
         <el-form-item label="是否涉及核心数据">
-          <el-select v-model="dataValue">
+          <el-select v-model="isCoreData">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -29,9 +29,9 @@
         </el-form-item>
         <div class="select-type">
           <el-form-item label="代码类型" prop="codeType">
-            <el-select v-model="codeValue">
+            <el-select v-model="postParams.codeType">
               <el-option
-                v-for="item in codeTypes"
+                v-for="item in codeTypeOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -46,35 +46,35 @@
               @click="addModule()"
             />
           </el-form-item>
-          <el-form-item label="代码分支路径" prop="path">
-            <el-input v-model="postParams.path" type="textarea" />
+          <el-form-item label="代码分支路径" prop="codePath">
+            <el-input v-model="postParams.codePath" type="textarea" />
           </el-form-item>
         </div>
         <div v-for="n in modules" :key="n">
           <add-module
             :index="size"
-            :module-code-type="types[n]"
-            :module-path="paths[n]"
+            :module-code-type="'sh'"
+            :module-path="''"
             @delteMoudle="delteMoudle"
             @changePath="changePath"
             @changeType="changeType"
           />
         </div>
         <el-form-item label="影响数据">
-          <el-input v-model="postParams.influenceData" />
+          <el-input v-model="postParams.affectedData" />
         </el-form-item>
-        <el-form-item label="ReviewBoard 地址" prop="address">
-          <el-input v-model="postParams.address" />
+        <el-form-item label="ReviewBoard 地址" prop="reviewBoardUrl">
+          <el-input v-model="postParams.reviewBoardUrl" />
         </el-form-item>
         <el-form-item label="上线步骤说明">
-          <el-input v-model="postParams.step" type="textarea" />
+          <el-input v-model="postParams.publishStep" type="textarea" />
         </el-form-item>
         <el-form-item label="出错回滚步骤">
-          <el-input v-model="postParams.back" type="textarea" />
+          <el-input v-model="postParams.errRollback" type="textarea" />
         </el-form-item>
       </el-form>
       <div class="create-publish-form-button">
-        <el-button type="primary">保存发布单</el-button>
+        <el-button type="primary" @click="savePulish()">保存发布单</el-button>
       </div>
     </div>
     <div class="create-publish-tip">
@@ -109,17 +109,19 @@
 </template>
 <script>
 import AddModule from './components/AddModule'
+import { createPublish } from '@/api/uds'
 const defaultPostParams = {
   applyUser: '',
   jiraId: '',
-  dataValue: 0,
-  codeValue: 0,
+  codeType: 0,
+  codePath: '',
   title: '',
-  path: '',
-  influenceData: '',
-  addRess: '',
-  step: '',
-  back: ''
+  affectedData: '',
+  reviewBoardUrl: '',
+  publishStep: '',
+  errRollback: '',
+  codePaths: [],
+  codeTypes: []
 }
 export default {
   name: 'UdsCreate',
@@ -129,7 +131,9 @@ export default {
       postParams: Object.assign({}, defaultPostParams),
       labelPosition: 'right',
       dataValue: '',
-      codeValue: '',
+      isCoreData: 0,
+      codeType: '',
+      codePath: '',
       size: 0,
       modules: [],
       types: [],
@@ -144,17 +148,17 @@ export default {
           label: '是'
         }
       ],
-      codeTypes: [
+      codeTypeOptions: [
         {
-          value: 0,
+          value: 'sh',
           label: 'sh 文件'
         },
         {
-          value: 1,
+          value: 'ct',
           label: 'ctsh 文件(创建表)'
         },
         {
-          value: 2,
+          value: 'jar',
           label: 'jar 文件'
         }
       ],
@@ -168,10 +172,10 @@ export default {
         codeType: [
           { required: true, message: '请选择 代码类型', trigger: 'blur' }
         ],
-        path: [
+        codePath: [
           { required: true, message: '请填写 代码分支路径', trigger: 'blur' }
         ],
-        address: [
+        reviewBoardUrl: [
           {
             required: true,
             message: '请填写 ReviewBoard 地址',
@@ -183,49 +187,66 @@ export default {
   },
   created() {
     this.dataValue = this.options[0].value
-    this.codeValue = this.codeTypes[0].value
+    this.postParams.codeType = this.codeTypeOptions[0].value
   },
   methods: {
+    handleParams() {
+      this.postParams.codePaths.push(this.postParams.codePath)
+      this.postParams.codeTypes.push(this.postParams.codeType)
+      const len = this.paths.length
+      if (this.paths && len > 0) {
+        for (let i = 0; i < len; i++) {
+          this.postParams.codePaths.push(this.paths[i])
+          this.postParams.codeTypes.push(this.types[i])
+        }
+      }
+      console.log('this.postParams.codePaths ' + this.postParams.codePaths)
+      console.log('this.postParams.codeTypes ' + this.postParams.codeTypes)
+    },
+    savePulish() {
+      this.handleParams()
+      this.$confirm('是否要保存该发布单', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+      }).then(() => {
+        createPublish(this.postParams).then(response => {
+          this.$message({
+            message: '保存成功',
+            type: 'success',
+            duration: 1000
+          })
+            this.$router.push({ path: '/uds/index' })
+        })
+      })
+    },
     addModule() {
-      console.log('parent add ')
       this.size += 1
       // 初始化
       this.modules.push(this.size)
-      this.types.push(this.codeTypes[0].value)
+      this.types.push(this.codeTypeOptions[0].value)
       this.paths.push('')
-      console.log(this.size)
-      console.log(this.modules)
-      console.log(this.types)
-      console.log(this.paths)
     },
     delteMoudle(num) {
-      console.log('parent 删除 ' + num)
       this.size -= 1
       const start = this.modules.indexOf(num)
-      console.log('start ' + start)
       if (start > -1) {
         this.modules.splice(start, 1)
         this.types.splice(start, 1)
         this.paths.splice(start, 1)
       }
-      console.log(this.size)
-      console.log(this.modules)
-      console.log(this.types)
-      console.log(this.paths)
     },
     changePath(num, path) {
       const start = this.modules.indexOf(num)
       if (start > -1) {
         this.paths[start] = path
       }
-      console.log(this.paths)
     },
     changeType(num, type) {
       const start = this.modules.indexOf(num)
       if (start > -1) {
         this.types[start] = type
       }
-      console.log(this.types)
     }
   }
 }

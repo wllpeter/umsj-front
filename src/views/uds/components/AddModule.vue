@@ -32,8 +32,8 @@ export default {
         default: 0
     },
     moduleCodeType: {
-        type: Number,
-        default: 0
+        type: String,
+        default: ''
     },
     modulePath: {
         type: String,
@@ -49,15 +49,15 @@ export default {
       selectPath: '',
       codeTypes: [
         {
-          value: 0,
+          value: 'sh',
           label: 'sh 文件'
         },
         {
-          value: 1,
+          value: 'ct',
           label: 'ctsh 文件(创建表)'
         },
         {
-          value: 2,
+          value: 'jar',
           label: 'jar 文件'
         }
       ]
@@ -67,9 +67,6 @@ export default {
       this.selectCodeType = this.moduleCodeType
       this.selectPath = this.modulePath
       this.num = this.index
-      console.log('child init')
-      console.log('child num ' + this.num)
-      console.log('child index ' + this.index)
   },
   methods: {
       delteMoudle() {
@@ -78,9 +75,6 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          console.log('child 删除 ')
-          console.log('child num ' + this.num)
-          console.log('child index ' + this.index)
           this.$emit('delteMoudle', this.num)
         })
       },

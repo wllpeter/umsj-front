@@ -6,4 +6,12 @@ export function fetchList(params) {
       method: 'get',
       params: params
     })
-  }
+}
+
+export function createPublish(data) {
+  return request({
+    url: '/uds/createPublish',
+    method: 'post',
+    data: data
+  })
+}
