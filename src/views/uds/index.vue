@@ -57,7 +57,7 @@
           <template slot-scope="scope">{{ 'PO_' + scope.row.id }}</template>
         </el-table-column>
         <el-table-column label="发布主题(发布项数量)" align="center">
-          <template slot-scope="scope">{{ scope.row.title }}</template>
+          <template slot-scope="scope">{{ scope.row.title + ' (' + scope.row.udsPublishItemList.length + ')' }}</template>
         </el-table-column>
         <el-table-column label="JIRA 单号" width="180" align="center">
           <template slot-scope="scope">{{ scope.row.jiraId }}</template>
@@ -69,7 +69,7 @@
           <template slot-scope="scope">{{ scope.row.applyUser }}</template>
         </el-table-column>
         <el-table-column label="状态" width="80" align="center">
-          <template slot-scope="scope">{{ scope.row.status }}</template>
+          <template slot-scope="scope"><el-button type="success">{{ scope.row.status }}</el-button></template>
         </el-table-column>
         <el-table-column
           label="创建日期"
@@ -116,6 +116,38 @@ const defaultListQuery = {
 }
 export default {
   name: 'UdsMangement',
+  filters: {
+  formatStatus(satus) {
+    let result = ''
+    switch (status) {
+      case 1:
+        result = '新建'
+        break
+      case 2:
+        result = '待审核'
+        break
+      case 3:
+        result = '审核通过'
+        break
+      case 4:
+        result = '审核不通过'
+        break
+      case 5:
+        result = '发布成功'
+        break
+      case 6:
+        result = '发布失败'
+        break
+      case 7:
+        result = '取消发布'
+        break
+      case 8:
+        result = '发布中'
+        break
+    }
+    return result
+  }
+  },
   data() {
     return {
       listQuery: Object.assign({}, defaultListQuery),
@@ -199,7 +231,13 @@ export default {
       this.getList()
     },
     lookUdsInfo(index, row) {
-      console.log('lookUdsInfo')
+      this.$router.push({
+        name: 'UdsDetail',
+        params: {
+          id: row.id,
+          status: row.status
+        }
+      })
     },
     getList() {
       if (this.listQuery.status === 0) {
@@ -213,7 +251,7 @@ export default {
       })
     },
     addPublish() {
-      console.log('addPublish')
+      this.$router.push({ path: '/uds/add' })
     }
   }
 }

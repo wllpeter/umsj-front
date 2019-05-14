@@ -44,7 +44,6 @@ export default {
     return {
       codeValue: 0,
       path: '',
-      num: 0,
       selectCodeType: '',
       selectPath: '',
       codeTypes: [
@@ -66,23 +65,23 @@ export default {
   created() {
       this.selectCodeType = this.moduleCodeType
       this.selectPath = this.modulePath
-      this.num = this.index
   },
   methods: {
       delteMoudle() {
+         console.log('delete module ' + this.index)
           this.$confirm('确定移除该发布项吗？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$emit('delteMoudle', this.num)
+          this.$emit('delteMoudle', this.index)
         })
       },
       changePath() {
-          this.$emit('changePath', this.num, this.selectPath)
+          this.$emit('changePath', this.index, this.selectPath)
       },
       changeType() {
-          this.$emit('changeType', this.num, this.selectCodeType)
+          this.$emit('changeType', this.index, this.selectCodeType)
       }
   }
 }

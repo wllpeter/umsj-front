@@ -11,6 +11,8 @@ export default {
     uds: 'UDS',
     udsMangement: '发布单管理',
     udsCreate: '新建发布单',
+    udsDetail: '发布单详情',
+    udsUpdate: '编辑发布单',
     directivePermission: '指令权限',
     icons: '图标',
     components: '组件',

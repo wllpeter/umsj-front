@@ -153,6 +153,26 @@ export const asyncRoutes = [
           icon: 'add-uds',
           roles: ['udsPublishCreate']
         }
+      },
+      {
+        path: 'update',
+        component: () => import('@/views/uds/update'),
+        name: 'update',
+        hidden: true,
+        meta: {
+          title: 'udsUpdate',
+          icon: 'add-uds'
+        }
+      },
+      {
+        path: 'detail',
+        component: () => import('@/views/uds/UdsDetail'),
+        name: 'UdsDetail',
+        hidden: true,
+        meta: {
+          title: 'udsDetail',
+          icon: 'add-uds'
+        }
       }
     ]
   },

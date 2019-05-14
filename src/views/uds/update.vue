@@ -1,6 +1,6 @@
 <template>
   <div class="create-publish">
-    <publish-form :is-edit="false" />
+    <publish-form :is-edit="true" />
     <publish-tip />
   </div>
 </template>
@@ -8,7 +8,7 @@
 import PublishForm from './components/PublishForm'
 import PublishTip from './components/PublishTip'
 export default {
-  name: 'UdsCreate',
+  name: 'UdsUpdate',
   components: { PublishForm, PublishTip },
   data() {
     return {
