@@ -15,3 +15,19 @@ export function createPublish(data) {
     data: data
   })
 }
+
+export function publishDetail(params) {
+  return request({
+    url: '/uds/publishDetail',
+    method: 'get',
+    params: params
+  })
+}
+
+export function updatePublish(data) {
+  return request({
+    url: '/uds/updatePublish',
+    method: 'post',
+    data: data
+  })
+}

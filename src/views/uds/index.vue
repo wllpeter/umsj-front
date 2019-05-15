@@ -53,7 +53,7 @@
         @selection-change="handleSelectionChange"
         @sort-change="orderSort"
       >
-        <el-table-column label="ID" width="140" align="center">
+        <el-table-column label="ID" sortable="custom" prop="id" width="140" align="center">
           <template slot-scope="scope">{{ 'PO_' + scope.row.id }}</template>
         </el-table-column>
         <el-table-column label="发布主题(发布项数量)" align="center">

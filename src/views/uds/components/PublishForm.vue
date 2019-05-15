@@ -28,33 +28,15 @@
         </el-select>
       </el-form-item>
       <div class="select-type">
-        <el-form-item label="代码类型" prop="codeType">
-          <el-select v-model="postParams.codeType">
-            <el-option
-              v-for="item in codeTypeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-          <el-button
-            type="primary"
-            icon="el-icon-plus"
-            size="mini"
-            class="select-type-button"
-            circle
-            @click="addModule()"
-          />
-        </el-form-item>
-        <el-form-item label="代码分支路径" prop="codePath">
-          <el-input v-model="postParams.codePath" type="textarea" />
+        <el-form-item>
+          <el-button type="primary" class="select-type-button" @click="addModule()">添加发布项</el-button>
         </el-form-item>
       </div>
-      <div v-for="(item, index) in moduleInfo" :key="item.id">
+      <div v-for="(item, index) in postParams.udsPublishItemList" :key="item.uuid">
         <add-module
           :index="index"
-          :module-code-type="item.childType"
-          :module-path="item.childPath"
+          :module-code-type="item.codeType"
+          :module-path="item.codePath"
           @delteMoudle="delteMoudle"
           @changePath="changePath"
           @changeType="changeType"
@@ -80,7 +62,8 @@
 </template>
 <script>
 import AddModule from './AddModule'
-import { createPublish } from '@/api/uds'
+import { getUuid } from '@/utils/common'
+import { createPublish, publishDetail, updatePublish } from '@/api/uds'
 const defaultPostParams = {
   applyUser: '',
   jiraId: '',
@@ -95,6 +78,9 @@ const defaultPostParams = {
   codeTypes: [],
   udsPublishItemList: []
 }
+const defaultListQuery = {
+  id: 0
+}
 export default {
   name: 'PublishForm',
   components: { AddModule },
@@ -106,16 +92,16 @@ export default {
   },
   data() {
     return {
+      listQuery: Object.assign({}, defaultListQuery),
       postParams: Object.assign({}, defaultPostParams),
       labelPosition: 'right',
       isCoreData: 0,
-      codeType: '',
-      codePath: '',
       moduleInfo: [],
-      size: 0,
+      // size: 0,
       modules: [],
       types: [],
       paths: [],
+      id: 0,
       options: [
         {
           value: 0,
@@ -164,26 +150,50 @@ export default {
     }
   },
   created() {
-    this.postParams.codeType = this.codeTypeOptions[0].value
+    if (!this.isEdit) {
+      this.postParams.codeType = this.codeTypeOptions[0].value
+    }
     // 更新的时候
-    // if (this.isEdit) {
-
-    // }
+    if (this.isEdit) {
+      this.id = this.$route.params.id
+      console.log(this.$route.params.id)
+      this.initModuleInfo(this.id)
+    }
   },
   methods: {
+    initModuleInfo(id) {
+      this.listQuery.id = this.id
+      publishDetail(this.listQuery).then(response => {
+        this.postParams = response.data
+        if (this.postParams.udsPublishItemList && this.postParams.udsPublishItemList.length > 0) {
+          const len = this.postParams.udsPublishItemList.length
+          for (let i = 0; i < len; i++) {
+            this.postParams.udsPublishItemList[i]['uuid'] = getUuid()
+          }
+        }
+      })
+    },
     handleParams() {
-      const itemList = {
-        codePath: '',
-        codeType: ''
-      }
-      itemList.codePath = this.postParams.codePath
-      itemList.codeType = this.postParams.codeType
-      this.postParams.udsPublishItemList.push(itemList)
-      for (let i = 0; i < this.moduleInfo.length; i++) {
-        itemList.codePath = this.moduleInfo[i].childPath
-        itemList.codeType = this.moduleInfo[i].childType
-        this.postParams.udsPublishItemList.push(itemList)
-      }
+      // var itemList = {
+      //   id: null,
+      //   codePath: '',
+      //   codeType: ''
+      // }
+      // console.log(this.postParams.codeType + this.postParams.codePath)
+      // itemList.codePath = this.postParams.codePath
+      // itemList.codeType = this.postParams.codeType
+      // itemList.id = this.codeId
+      // this.postParams.udsPublishItemList.push(itemList)
+      // console.log(this.moduleInfo.length)
+      // for (let i = 0; i < this.moduleInfo.length; i++) {
+      //   var childItem = {
+      //     id: null,
+      //     codePath: '',
+      //     codeType: ''
+      //   }
+      //   this.postParams.udsPublishItemList.push(childItem)
+      // }
+      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     },
     savePulish() {
       this.handleParams()
@@ -192,48 +202,58 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        createPublish(this.postParams).then(response => {
-          this.$message({
-            message: '保存成功',
-            type: 'success',
-            duration: 1000
+        if (this.isEdit) {
+          updatePublish(this.postParams).then(response => {
+            this.$message({
+              type: 'success',
+              message: '更新成功',
+              duration: 1000
+            })
+            this.$router.push({ path: '/uds/index' })
           })
-          this.$router.push({ path: '/uds/index' })
-        })
+        } else {
+          createPublish(this.postParams).then(response => {
+            this.$message({
+              type: 'success',
+              message: '创建成功',
+              duration: 1000
+            })
+            this.$router.push({ path: '/uds/index' })
+          })
+        }
       })
     },
     addModule() {
       const defaultModuleInfo = {
-        childType: 'sh',
-        id: this.size,
-        childPath: ''
+        id: null,
+        codeType: 'sh',
+        codePath: '',
+        uuid: getUuid()
       }
-      defaultModuleInfo.childType = 'sh'
-      defaultModuleInfo.childPath = ''
-      this.moduleInfo.push(defaultModuleInfo)
-      this.size = this.size + 1
-      // console.log('this.moduleInfo ' + this.moduleInfo.length)
-      this.moduleInfo.forEach(item => { console.log(item.childType + '  ' + item.childPath) })
+      this.postParams.udsPublishItemList.push(defaultModuleInfo)
+      // this.size = this.size + 1
+      console.log('now module')
+      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     },
     delteMoudle(num) {
       // console.log('删除：')
       // console.log(num)
       // this.size = this.size - 1
-      this.moduleInfo.splice(num, 1)
-      this.moduleInfo.forEach(item => { console.log(item.childType + '  ' + item.childPath) })
-      // console.log('this.moduleInfo ' + this.moduleInfo.length)
+      this.postParams.udsPublishItemList.splice(num, 1)
+      console.log('delete after module')
+      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     },
     changePath(num, path) {
       // console.log('num ' + num)
-      this.moduleInfo[num].childPath = path
-      this.moduleInfo.forEach(item => { console.log(item.childType + '  ' + item.childPath) })
-      // console.log('len ' + this.moduleInfo.length)
+      this.postParams.udsPublishItemList[num].codePath = path
+      console.log('changePath after module')
+      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     },
     changeType(num, type) {
       // console.log('num ' + num)
-      this.moduleInfo[num].childType = type
-      this.moduleInfo.forEach(item => { console.log(item.childType + '  ' + item.childPath) })
-      // console.log('len ' + this.moduleInfo.length)
+      this.postParams.udsPublishItemList[num].codeType = type
+      console.log('changeType after module')
+      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     }
   }
 }
@@ -243,10 +263,10 @@ export default {
   margin-left: 10px;
   width: 56%;
   .select-type {
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
+    // background-color: #f5f5f5;
+    // border: 1px solid #e3e3e3;
     .select-type-button {
-      float: right;
+      float: left;
     }
   }
   .create-publish-form-button {
