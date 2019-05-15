@@ -1,46 +1,50 @@
 <template>
   <div class="role-detail-container">
-    <div class="role-header">
-      <h3 v-if="isEdit">编辑角色</h3>
-      <h3 v-else>添加角色</h3>
-      <el-form :model="roleParam" label-width="160px" :label-position="labelPosition" style="width: 600px" size="small">
-        <el-form-item label="角色编码(字母+下划线)">
-          <el-input v-model="roleParam.code" :disabled="isEdit" />
-        </el-form-item>
-        <el-form-item label="角色名称(中文名称)">
-          <el-input v-model="roleParam.name" />
-        </el-form-item>
-      </el-form>
-    </div>
-    <div class="role-body">
-      <div class="menu-tree">
-        <h4>角色菜单</h4>
-        <el-tree
-          ref="mTree"
-          :data="menuTree"
-          show-checkbox
-          node-key="id"
-          default-expand-all
-          :expand-on-click-node="false"
-          :default-checked-keys="checkMenu"
-        />
+    <el-card class="box-card">
+      <div style="width: 70%">
+        <div class="role-header">
+          <h3 v-if="isEdit">编辑角色</h3>
+          <h3 v-else>添加角色</h3>
+          <el-form :model="roleParam" label-width="160px" :label-position="labelPosition" style="width: 600px" size="small">
+            <el-form-item label="角色编码(字母+下划线)">
+              <el-input v-model="roleParam.code" :disabled="isEdit" />
+            </el-form-item>
+            <el-form-item label="角色名称(中文名称)">
+              <el-input v-model="roleParam.name" />
+            </el-form-item>
+          </el-form>
+        </div>
+        <div class="role-body">
+          <div class="menu-tree">
+            <h4>角色菜单</h4>
+            <el-tree
+              ref="mTree"
+              :data="menuTree"
+              show-checkbox
+              node-key="id"
+              default-expand-all
+              :expand-on-click-node="false"
+              :default-checked-keys="checkMenu"
+            />
+          </div>
+          <div class="action-tree">
+            <h4>操作权限</h4>
+            <el-tree
+              ref="aTree"
+              :data="actionTree"
+              show-checkbox
+              node-key="id"
+              default-expand-all
+              :expand-on-click-node="false"
+              :default-checked-keys="checkAction"
+            />
+          </div>
+        </div>
+        <div class="role-footer">
+          <el-button class="role-footer-button" size="mini" type="primary" @click="saveChange(isEdit)">保存</el-button>
+        </div>
       </div>
-      <div class="action-tree">
-        <h4>操作权限</h4>
-        <el-tree
-          ref="aTree"
-          :data="actionTree"
-          show-checkbox
-          node-key="id"
-          default-expand-all
-          :expand-on-click-node="false"
-          :default-checked-keys="checkAction"
-        />
-      </div>
-    </div>
-    <div class="role-footer">
-      <el-button class="role-footer-button" size="mini" type="primary" @click="saveChange(isEdit)">保存</el-button>
-    </div>
+    </el-card>
   </div>
 </template>
 
