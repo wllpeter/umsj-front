@@ -44,9 +44,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .create-publish-tip {
-  flex: 1;
-  margin-left: 15px;
-  width: 38%;
+  margin-left: 10px;
+  margin-right: 10px;
+  .box-card {
+    width: 95%;
+  }
+  // width: 100%;
   .create-publish-tip-star {
     color: #ff4949;
     display: inline;

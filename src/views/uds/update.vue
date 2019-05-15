@@ -1,7 +1,11 @@
 <template>
   <div class="create-publish">
-    <publish-form :is-edit="true" />
-    <publish-tip />
+    <div class="publish">
+      <publish-form :is-edit="true" />
+    </div>
+    <div class="tip">
+      <publish-tip />
+    </div>
   </div>
 </template>
 <script>
@@ -23,6 +27,12 @@ export default {
   margin-left: 10px;
   width: 100%;
   display: flex;
+  .publish {
+    flex: 1.5;
+  }
+  .tip {
+    flex: 1
+  }
 }
 </style>
 
