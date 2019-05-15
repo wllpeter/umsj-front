@@ -1,66 +1,68 @@
 <template>
-  <el-card class="box-card">
-    <div class="create-publish-form">
-      <h3 v-if="isEdit">编辑发布单</h3>
-      <h3 v-else>新建发布单</h3>
-      <el-form
-        ref="postParams"
-        :model="postParams"
-        :rules="rules"
-        label-width="220px"
-        :label-position="labelPosition"
-        style="width: 800px"
-        size="medium"
-      >
-        <el-form-item label="上线原因" prop="title">
-          <el-input v-model="postParams.title" placeholder="本次的发布主题" />
-        </el-form-item>
-        <el-form-item label="JIRA单号" prop="jiraId">
-          <el-input v-model="postParams.jiraId" />
-        </el-form-item>
-        <el-form-item label="是否涉及核心数据">
-          <el-select v-model="isCoreData">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-        <div class="select-type">
-          <el-form-item label="发布项">
-            <el-button type="primary" class="select-type-button" @click="addModule()">添加发布项</el-button>
+  <div class="publish-form">
+    <el-card class="box-card">
+      <div class="create-publish-form">
+        <h3 v-if="isEdit">编辑发布单</h3>
+        <h3 v-else>新建发布单</h3>
+        <el-form
+          ref="postParams"
+          :model="postParams"
+          :rules="rules"
+          label-width="220px"
+          :label-position="labelPosition"
+          style="width: 800px"
+          size="medium"
+        >
+          <el-form-item label="上线原因" prop="title">
+            <el-input v-model="postParams.title" placeholder="本次的发布主题" />
           </el-form-item>
+          <el-form-item label="JIRA单号" prop="jiraId">
+            <el-input v-model="postParams.jiraId" />
+          </el-form-item>
+          <el-form-item label="是否涉及核心数据">
+            <el-select v-model="isCoreData">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <div class="select-type">
+            <el-form-item label="发布项">
+              <el-button type="primary" class="select-type-button" @click="addModule()">添加发布项</el-button>
+            </el-form-item>
+          </div>
+          <div v-for="(item, index) in postParams.udsPublishItemList" :key="item.uuid">
+            <add-module
+              :index="index"
+              :module-code-type="item.codeType"
+              :module-path="item.codePath"
+              @delteMoudle="delteMoudle"
+              @changePath="changePath"
+              @changeType="changeType"
+            />
+          </div>
+          <el-form-item label="影响数据">
+            <el-input v-model="postParams.affectedData" />
+          </el-form-item>
+          <el-form-item label="ReviewBoard 地址" prop="reviewBoardUrl">
+            <el-input v-model="postParams.reviewBoardUrl" />
+          </el-form-item>
+          <el-form-item label="上线步骤说明">
+            <el-input v-model="postParams.publishStep" type="textarea" />
+          </el-form-item>
+          <el-form-item label="出错回滚步骤">
+            <el-input v-model="postParams.errRollback" type="textarea" />
+          </el-form-item>
+        </el-form>
+        <div class="create-publish-form-button">
+          <el-button class="create-publish-form-button-button" type="primary" @click="savePulish()">保存发布单</el-button>
         </div>
-        <div v-for="(item, index) in postParams.udsPublishItemList" :key="item.uuid">
-          <add-module
-            :index="index"
-            :module-code-type="item.codeType"
-            :module-path="item.codePath"
-            @delteMoudle="delteMoudle"
-            @changePath="changePath"
-            @changeType="changeType"
-          />
-        </div>
-        <el-form-item label="影响数据">
-          <el-input v-model="postParams.affectedData" />
-        </el-form-item>
-        <el-form-item label="ReviewBoard 地址" prop="reviewBoardUrl">
-          <el-input v-model="postParams.reviewBoardUrl" />
-        </el-form-item>
-        <el-form-item label="上线步骤说明">
-          <el-input v-model="postParams.publishStep" type="textarea" />
-        </el-form-item>
-        <el-form-item label="出错回滚步骤">
-          <el-input v-model="postParams.errRollback" type="textarea" />
-        </el-form-item>
-      </el-form>
-      <div class="create-publish-form-button">
-        <el-button class="create-publish-form-button-button" type="primary" @click="savePulish()">保存发布单</el-button>
       </div>
-    </div>
-  </el-card>
+    </el-card>
+  </div>
 </template>
 <script>
 import AddModule from './AddModule'
@@ -255,7 +257,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.create-publish-form {
+.publish-form {
+  flex: 2;
+  .create-publish-form {
   margin-left: 10px;
   width: 59%;
   .select-type {
@@ -272,6 +276,7 @@ export default {
       margin-left: 50%;
     }
   }
+}
 }
 </style>
 

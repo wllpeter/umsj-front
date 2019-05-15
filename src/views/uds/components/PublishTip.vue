@@ -44,6 +44,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .create-publish-tip {
+  flex: 1;
   margin-left: 15px;
   width: 38%;
   .create-publish-tip-star {
