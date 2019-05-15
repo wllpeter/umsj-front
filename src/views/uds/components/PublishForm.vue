@@ -195,7 +195,7 @@ export default {
       //   }
       //   this.postParams.udsPublishItemList.push(childItem)
       // }
-      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
+      // this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     },
     savePulish() {
       this.handleParams()
@@ -233,29 +233,23 @@ export default {
         uuid: getUuid()
       }
       this.postParams.udsPublishItemList.push(defaultModuleInfo)
-      // this.size = this.size + 1
-      console.log('now module')
-      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
+      // console.log('now module')
+      // this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     },
     delteMoudle(num) {
-      // console.log('删除：')
-      // console.log(num)
-      // this.size = this.size - 1
       this.postParams.udsPublishItemList.splice(num, 1)
-      console.log('delete after module')
-      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
+      // console.log('delete after module')
+      // this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     },
     changePath(num, path) {
-      // console.log('num ' + num)
       this.postParams.udsPublishItemList[num].codePath = path
-      console.log('changePath after module')
-      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
+      // console.log('changePath after module')
+      // this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     },
     changeType(num, type) {
-      // console.log('num ' + num)
       this.postParams.udsPublishItemList[num].codeType = type
-      console.log('changeType after module')
-      this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
+      // console.log('changeType after module')
+      // this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
     }
   }
 }

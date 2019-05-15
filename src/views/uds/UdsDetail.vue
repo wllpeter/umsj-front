@@ -2,7 +2,7 @@
   <div>
     <h3>发布单详情</h3>
     <el-button type="success">{{ id }}</el-button>
-    <el-button v-if="status === 1 || status === 4" type="primary" @click="updatePublish()">编辑发布单</el-button>
+    <!-- <el-button v-if="status === 1 || status === 4" type="primary" @click="updatePublish()">编辑发布单</el-button> -->
   </div>
 </template>
 <script>
