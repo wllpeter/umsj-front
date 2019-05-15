@@ -11,6 +11,7 @@
           如有操作上的疑问，
           <a
             href="http://wiki.tuniu.org/pages/viewpage.action?pageId=101177636"
+            target="view_window"
             style="color: #72AFD2"
           >请点击这里查看帮助文档；</a>
         </li>
@@ -22,6 +23,7 @@
           紧急发布：非日常发布时间段；参见
           <a
             href="http://wiki.tuniu.org/pages/viewpage.action?pageId=62259972"
+            target="view_window"
             style="color: #72AFD2"
           >数据开发后台上线发布流程。</a>
         </li>

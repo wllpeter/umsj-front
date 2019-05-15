@@ -60,7 +60,7 @@
           <template slot-scope="scope">{{ scope.row.title + ' (' + scope.row.udsPublishItemList.length + ')' }}</template>
         </el-table-column>
         <el-table-column label="JIRA 单号" width="180" align="center">
-          <template slot-scope="scope">{{ scope.row.jiraId }}</template>
+          <template slot-scope="scope"><a :href="['http://jira.tuniu.org/browse/']+scope.row.jiraId" target="view_window" style="color: #72AFD2">{{ scope.row.jiraId }}</a></template>
         </el-table-column>
         <el-table-column label="发布者" width="180" align="center">
           <template slot-scope="scope">{{ scope.row.publishUser }}</template>
@@ -68,8 +68,8 @@
         <el-table-column label="审核者" width="180" align="center">
           <template slot-scope="scope">{{ scope.row.applyUser }}</template>
         </el-table-column>
-        <el-table-column label="状态" width="80" align="center">
-          <template slot-scope="scope"><el-button type="success">{{ scope.row.status }}</el-button></template>
+        <el-table-column label="状态" width="120" align="center">
+          <template slot-scope="scope"><el-button type="primary" plain>{{ scope.row.status | formatStatus }}</el-button></template>
         </el-table-column>
         <el-table-column
           label="创建日期"
@@ -102,6 +102,7 @@
   </div>
 </template>
 <script>
+import { formatStatus } from '@/utils/common'
 import { fetchList } from '@/api/uds'
 const defaultListQuery = {
   pageNum: 1,
@@ -118,34 +119,7 @@ export default {
   name: 'UdsMangement',
   filters: {
   formatStatus(satus) {
-    let result = ''
-    switch (status) {
-      case 1:
-        result = '新建'
-        break
-      case 2:
-        result = '待审核'
-        break
-      case 3:
-        result = '审核通过'
-        break
-      case 4:
-        result = '审核不通过'
-        break
-      case 5:
-        result = '发布成功'
-        break
-      case 6:
-        result = '发布失败'
-        break
-      case 7:
-        result = '取消发布'
-        break
-      case 8:
-        result = '发布中'
-        break
-    }
-    return result
+    return formatStatus(satus)
   }
   },
   data() {

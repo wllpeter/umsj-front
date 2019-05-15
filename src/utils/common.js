@@ -81,3 +81,32 @@ export function getUuid() {
     var uuid = s.join('')
     return uuid
 }
+
+export function formatStatus(satus) {
+    let result = ''
+    if (satus === 1) {
+        result = '新建'
+    }
+    if (satus === 2) {
+        result = '待审核'
+    }
+    if (satus === 3) {
+        result = '审核通过'
+    }
+    if (satus === 4) {
+        result = '审核不通过'
+    }
+    if (satus === 5) {
+        result = '发布成功'
+    }
+    if (satus === 6) {
+        result = '发布失败'
+    }
+    if (satus === 7) {
+        result = '取消发布'
+    }
+    if (satus === 8) {
+        result = '发布中'
+    }
+    return result
+}

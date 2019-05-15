@@ -29,7 +29,7 @@
           </el-select>
         </el-form-item>
         <div class="select-type">
-          <el-form-item>
+          <el-form-item label="发布项">
             <el-button type="primary" class="select-type-button" @click="addModule()">添加发布项</el-button>
           </el-form-item>
         </div>
@@ -262,7 +262,7 @@ export default {
     // background-color: #f5f5f5;
     // border: 1px solid #e3e3e3;
     .select-type-button {
-      float: left;
+      float: right;
     }
   }
   .create-publish-form-button {
