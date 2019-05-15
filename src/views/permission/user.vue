@@ -39,13 +39,13 @@
         <el-table-column label="用户名" width="180" sortable="custom" prop="username" align="center">
           <template slot-scope="scope">{{ scope.row.username }}</template>
         </el-table-column>
-        <el-table-column label="姓名" width="180" align="center">
+        <el-table-column label="姓名" align="center">
           <template slot-scope="scope">{{ scope.row.fullName }}</template>
         </el-table-column>
         <el-table-column label="部门" width="300" align="center">
           <template slot-scope="scope">{{ scope.row.department }}</template>
         </el-table-column>
-        <el-table-column label="角色" align="center">
+        <el-table-column label="角色" width="180" align="center">
           <template slot-scope="scope">
             <RoleButton :role-list="scope.row.roleItems" />
           </template>

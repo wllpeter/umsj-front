@@ -93,7 +93,7 @@
         layout="total, sizes,prev, pager, next,jumper"
         :page-size="listQuery.pageSize"
         :total="total"
-        :page-sizes="[15,20,30]"
+        :page-sizes="[30,40,50]"
         :current-page.sync="listQuery.pageNum"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
@@ -106,7 +106,7 @@ import { formatStatus } from '@/utils/common'
 import { fetchList } from '@/api/uds'
 const defaultListQuery = {
   pageNum: 1,
-  pageSize: 15,
+  pageSize: 30,
   sortBy: 'id',
   order: 'desc',
   applyUser: '',
