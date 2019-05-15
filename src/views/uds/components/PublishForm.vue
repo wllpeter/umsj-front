@@ -57,7 +57,7 @@
         </el-form-item>
       </el-form>
       <div class="create-publish-form-button">
-        <el-button type="primary" @click="savePulish()">保存发布单</el-button>
+        <el-button class="create-publish-form-button-button" type="primary" @click="savePulish()">保存发布单</el-button>
       </div>
     </div>
   </el-card>
@@ -274,6 +274,9 @@ export default {
   .create-publish-form-button {
     width: 100%;
     margin-left: 25%;
+    .create-publish-form-button-button {
+      margin-left: 50%;
+    }
   }
 }
 </style>
