@@ -57,7 +57,7 @@
           <template slot-scope="scope">{{ 'PO_' + scope.row.id }}</template>
         </el-table-column>
         <el-table-column label="发布主题(发布项数量)" align="center">
-          <template slot-scope="scope">{{ scope.row.title + ' (' + scope.row.udsPublishItemList.length + ')' }}</template>
+          <template slot-scope="scope"><a style="color: #72AFD2" @click="lookUdsInfo(scope.$index, scope.row)">{{ scope.row.title + ' (' + scope.row.udsPublishItemList.length + ')' }}</a></template>
         </el-table-column>
         <el-table-column label="JIRA 单号" width="180" align="center">
           <template slot-scope="scope"><a :href="['http://jira.tuniu.org/browse/']+scope.row.jiraId" target="view_window" style="color: #72AFD2">{{ scope.row.jiraId }}</a></template>
