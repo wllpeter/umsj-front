@@ -263,7 +263,7 @@ export default {
 <style lang="scss" scoped>
 .create-publish-form {
   margin-left: 10px;
-  width: 56%;
+  width: 59%;
   .select-type {
     // background-color: #f5f5f5;
     // border: 1px solid #e3e3e3;

@@ -93,6 +93,8 @@ export default {
   border: 1px solid #e3e3e3;
   .select-type-button {
     float: right;
+    margin-top: 2px;
+    margin-right: 2px
   }
 }
 </style>

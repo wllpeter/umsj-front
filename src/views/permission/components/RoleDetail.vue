@@ -280,28 +280,29 @@ export default {
 <style lang="scss" scoped>
   .role-detail-container {
     margin-top: 10px;
-    margin-left: 10px
-  }
-  .role-header {
+    margin-left: 10px;
+    width: 95%;
+    .role-header {
     margin-top: 15px;
     width: 100%
-  }
-  .role-body {
-    margin-top: 15px;
-    width: 50%;
-    display: flex;
-    .menu-tree {
-      flex: 1
     }
-    .action-tree {
-      flex: 1
+    .role-body {
+      margin-top: 15px;
+      width: 50%;
+      display: flex;
+      .menu-tree {
+        flex: 1
+      }
+      .action-tree {
+        flex: 1
+      }
     }
-  }
-  .role-footer {
-    width: 50%;
-    margin-top: 15px;
-    .role-footer-button {
-      margin-left: 25%
+    .role-footer {
+      width: 50%;
+      margin-top: 15px;
+      .role-footer-button {
+        margin-left: 25%
+      }
     }
   }
 </style>
