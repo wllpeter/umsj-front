@@ -1,10 +1,10 @@
 <template>
   <div class="create-publish">
     <div class="publish">
-      <publish-form :is-edit="false" />
+      <publish-form :is-edit="false"></publish-form>
     </div>
     <div class="tip">
-      <publish-tip />
+      <publish-tip></publish-tip>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   components: { PublishForm, PublishTip },
   data() {
     return {
-        name: ''
+      name: ''
     }
   }
 }
@@ -31,7 +31,7 @@ export default {
     flex: 1.5;
   }
   .tip {
-    flex: 1
+    flex: 1;
   }
 }
 </style>

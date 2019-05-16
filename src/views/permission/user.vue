@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card class="filter-container" shadow="never">
       <div>
-        <i class="el-icon-search" />
+        <i class="el-icon-search"></i>
         <span>筛选搜索</span>
         <el-button style="float:right" type="primary" size="small" @click="handleSearchList()">查询搜索</el-button>
         <el-button
@@ -14,13 +14,13 @@
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
           <el-form-item label="用户名：">
-            <el-input v-model="listQuery.username" class="input-width" placeholder="用户名" />
+            <el-input v-model="listQuery.username" class="input-width" placeholder="用户名"></el-input>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card class="operate-container" shadow="never">
-      <i class="el-icon-tickets" />
+      <i class="el-icon-tickets"></i>
       <span>数据列表</span>
     </el-card>
     <div class="table-container">
@@ -47,7 +47,7 @@
         </el-table-column>
         <el-table-column label="角色" width="180" align="center">
           <template slot-scope="scope">
-            <RoleButton :role-list="scope.row.roleItems" />
+            <RoleButton :role-list="scope.row.roleItems"></RoleButton>
           </template>
         </el-table-column>
         <el-table-column

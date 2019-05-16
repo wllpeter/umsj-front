@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card class="filter-container" shadow="never">
       <div>
-        <i class="el-icon-search" />
+        <i class="el-icon-search"></i>
         <span>筛选搜索</span>
         <el-button style="float:right" type="primary" size="small" @click="handleSearchList()">查询搜索</el-button>
         <el-button
@@ -14,16 +14,16 @@
       <div style="margin-top: 20px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
           <el-form-item label="主题：">
-            <el-input v-model="listQuery.title" class="input-width" placeholder="主题" />
+            <el-input v-model="listQuery.title" class="input-width" placeholder="主题"></el-input>
           </el-form-item>
           <el-form-item label="JIRA 单号：">
-            <el-input v-model="listQuery.jiraId" class="input-width" placeholder="JIRA 单号" />
+            <el-input v-model="listQuery.jiraId" class="input-width" placeholder="JIRA 单号"></el-input>
           </el-form-item>
           <el-form-item label="发布者：">
-            <el-input v-model="listQuery.publishUser" class="input-width" placeholder="发布者" />
+            <el-input v-model="listQuery.publishUser" class="input-width" placeholder="发布者"></el-input>
           </el-form-item>
           <el-form-item label="审核者：">
-            <el-input v-model="listQuery.applyUser" class="input-width" placeholder="审核者" />
+            <el-input v-model="listQuery.applyUser" class="input-width" placeholder="审核者"></el-input>
           </el-form-item>
           <el-form-item>
             <el-select v-model="listQuery.status" placeholder="全部状态">
@@ -39,7 +39,7 @@
       </div>
     </el-card>
     <el-card class="operate-container" shadow="never">
-      <i class="el-icon-tickets" />
+      <i class="el-icon-tickets"></i>
       <span>发布单列表</span>
       <el-button size="mini" class="btn-add-publish" type="primary" @click="addPublish()">新建发布单</el-button>
     </el-card>
@@ -57,10 +57,21 @@
           <template slot-scope="scope">{{ 'PO_' + scope.row.id }}</template>
         </el-table-column>
         <el-table-column label="发布主题(发布项数量)" align="center">
-          <template slot-scope="scope"><a style="color: #72AFD2" @click="lookUdsInfo(scope.$index, scope.row)">{{ scope.row.title + ' (' + scope.row.udsPublishItemList.length + ')' }}</a></template>
+          <template slot-scope="scope">
+            <a
+              style="color: #72AFD2"
+              @click="lookUdsInfo(scope.$index, scope.row)"
+            >{{ scope.row.title + ' (' + scope.row.udsPublishItemList.length + ')' }}</a>
+          </template>
         </el-table-column>
         <el-table-column label="JIRA 单号" width="180" align="center">
-          <template slot-scope="scope"><a :href="['http://jira.tuniu.org/browse/']+scope.row.jiraId" target="view_window" style="color: #72AFD2">{{ scope.row.jiraId }}</a></template>
+          <template slot-scope="scope">
+            <a
+              :href="['http://jira.tuniu.org/browse/']+scope.row.jiraId"
+              target="view_window"
+              style="color: #72AFD2"
+            >{{ scope.row.jiraId }}</a>
+          </template>
         </el-table-column>
         <el-table-column label="发布者" width="180" align="center">
           <template slot-scope="scope">{{ scope.row.publishUser }}</template>
@@ -69,7 +80,9 @@
           <template slot-scope="scope">{{ scope.row.applyUser }}</template>
         </el-table-column>
         <el-table-column label="状态" width="120" align="center">
-          <template slot-scope="scope"><el-button type="primary" plain>{{ scope.row.status | formatStatus }}</el-button></template>
+          <template slot-scope="scope">
+            <el-button type="primary" plain>{{ scope.row.status | formatStatus }}</el-button>
+          </template>
         </el-table-column>
         <el-table-column
           label="创建日期"
@@ -118,9 +131,9 @@ const defaultListQuery = {
 export default {
   name: 'UdsMangement',
   filters: {
-  formatStatus(satus) {
-    return formatStatus(satus)
-  }
+    formatStatus(satus) {
+      return formatStatus(satus)
+    }
   },
   data() {
     return {

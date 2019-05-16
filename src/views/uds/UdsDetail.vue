@@ -16,18 +16,18 @@ export default {
     }
   },
   created() {
-      this.id = this.$route.params.id
-      this.status = this.$route.params.status
-      console.log('this.id ' + this.id)
-      console.log('this.status ' + this.status)
+    this.id = this.$route.params.id
+    this.status = this.$route.params.status
+    console.log('this.id ' + this.id)
+    console.log('this.status ' + this.status)
   },
   methods: {
-      updatePublish() {
-        this.$router.push({
+    updatePublish() {
+      this.$router.push({
         name: 'update',
         params: { id: this.id }
       })
-      }
+    }
   }
 }
 </script>

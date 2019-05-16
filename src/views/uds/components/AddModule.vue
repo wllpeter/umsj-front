@@ -19,7 +19,7 @@
       />
     </el-form-item>
     <el-form-item label="代码分支路径" prop="path">
-      <el-input v-model="selectPath" type="textarea" @change="changePath" />
+      <el-input v-model="selectPath" type="textarea" @change="changePath"></el-input>
     </el-form-item>
   </div>
 </template>
@@ -28,16 +28,16 @@ export default {
   name: 'AddModule',
   props: {
     index: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0
     },
     moduleCodeType: {
-        type: String,
-        default: ''
+      type: String,
+      default: ''
     },
     modulePath: {
-        type: String,
-        default: ''
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -63,25 +63,25 @@ export default {
     }
   },
   created() {
-      this.selectCodeType = this.moduleCodeType
-      this.selectPath = this.modulePath
+    this.selectCodeType = this.moduleCodeType
+    this.selectPath = this.modulePath
   },
   methods: {
-      delteMoudle() {
-          this.$confirm('确定移除该发布项吗？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$emit('delteMoudle', this.index)
-        })
-      },
-      changePath() {
-          this.$emit('changePath', this.index, this.selectPath)
-      },
-      changeType() {
-          this.$emit('changeType', this.index, this.selectCodeType)
-      }
+    delteMoudle() {
+      this.$confirm('确定移除该发布项吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$emit('delteMoudle', this.index)
+      })
+    },
+    changePath() {
+      this.$emit('changePath', this.index, this.selectPath)
+    },
+    changeType() {
+      this.$emit('changeType', this.index, this.selectCodeType)
+    }
   }
 }
 </script>
@@ -93,7 +93,7 @@ export default {
   .select-type-button {
     float: right;
     margin-top: 2px;
-    margin-right: 2px
+    margin-right: 2px;
   }
 }
 </style>

@@ -5,12 +5,18 @@
         <div class="role-header">
           <h3 v-if="isEdit">编辑角色</h3>
           <h3 v-else>添加角色</h3>
-          <el-form :model="roleParam" label-width="160px" :label-position="labelPosition" style="width: 600px" size="small">
+          <el-form
+            :model="roleParam"
+            label-width="160px"
+            :label-position="labelPosition"
+            style="width: 600px"
+            size="small"
+          >
             <el-form-item label="角色编码(字母+下划线)">
-              <el-input v-model="roleParam.code" :disabled="isEdit" />
+              <el-input v-model="roleParam.code" :disabled="isEdit"></el-input>
             </el-form-item>
             <el-form-item label="角色名称(中文名称)">
-              <el-input v-model="roleParam.name" />
+              <el-input v-model="roleParam.name"></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -41,7 +47,12 @@
           </div>
         </div>
         <div class="role-footer">
-          <el-button class="role-footer-button" size="mini" type="primary" @click="saveChange(isEdit)">保存</el-button>
+          <el-button
+            class="role-footer-button"
+            size="mini"
+            type="primary"
+            @click="saveChange(isEdit)"
+          >保存</el-button>
         </div>
       </div>
     </el-card>
@@ -222,7 +233,9 @@ export default {
       const halfSize = this.$refs.mTree.getHalfCheckedNodes().length
       if (halfSize > 0) {
         for (let i = 0; i < halfSize; i++) {
-          this.postRoleParam.menus.push(this.$refs.mTree.getHalfCheckedNodes()[i].code)
+          this.postRoleParam.menus.push(
+            this.$refs.mTree.getHalfCheckedNodes()[i].code
+          )
         }
       }
       for (let i = 0; i < size; i++) {
@@ -278,31 +291,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .role-detail-container {
-    margin-top: 10px;
-    margin-left: 10px;
-    width: 95%;
-    .role-header {
+.role-detail-container {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 95%;
+  .role-header {
     margin-top: 15px;
-    width: 100%
+    width: 100%;
+  }
+  .role-body {
+    margin-top: 15px;
+    width: 50%;
+    display: flex;
+    .menu-tree {
+      flex: 1;
     }
-    .role-body {
-      margin-top: 15px;
-      width: 50%;
-      display: flex;
-      .menu-tree {
-        flex: 1
-      }
-      .action-tree {
-        flex: 1
-      }
-    }
-    .role-footer {
-      width: 50%;
-      margin-top: 15px;
-      .role-footer-button {
-        margin-left: 25%
-      }
+    .action-tree {
+      flex: 1;
     }
   }
+  .role-footer {
+    width: 50%;
+    margin-top: 15px;
+    .role-footer-button {
+      margin-left: 25%;
+    }
+  }
+}
 </style>

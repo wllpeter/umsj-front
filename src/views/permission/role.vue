@@ -1,9 +1,15 @@
 <template>
   <div class="app-container">
     <el-card class="operate-container" shadow="never">
-      <i class="el-icon-tickets" />
+      <i class="el-icon-tickets"></i>
       <span>角色列表</span>
-      <el-button :disabled="havaPermission" size="mini" class="btn-add-role" type="primary" @click="addRole()">添加角色</el-button>
+      <el-button
+        :disabled="havaPermission"
+        size="mini"
+        class="btn-add-role"
+        type="primary"
+        @click="addRole()"
+      >添加角色</el-button>
     </el-card>
     <div class="table-container">
       <el-table
@@ -26,12 +32,12 @@
         </el-table-column>
         <el-table-column label="菜单" width="250" align="center">
           <template slot-scope="scope">
-            <MenuPermission :self-menus="scope.row.menus" />
+            <MenuPermission :self-menus="scope.row.menus"></MenuPermission>
           </template>
         </el-table-column>
         <el-table-column label="功能权限" width="250" align="center">
           <template slot-scope="scope">
-            <ActionsPermission :self-actions="scope.row.actions" />
+            <ActionsPermission :self-actions="scope.row.actions"></ActionsPermission>
           </template>
         </el-table-column>
         <el-table-column
@@ -54,8 +60,18 @@
         </el-table-column>
         <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
-            <el-button :disabled="havaPermission" size="mini" type="primary" @click="changeRole(scope.$index, scope.row)">编辑</el-button>
-            <el-button :disabled="havaPermission" size="mini" type="primary" @click="deleteRole(scope.$index, scope.row)">删除</el-button>
+            <el-button
+              :disabled="havaPermission"
+              size="mini"
+              type="primary"
+              @click="changeRole(scope.$index, scope.row)"
+            >编辑</el-button>
+            <el-button
+              :disabled="havaPermission"
+              size="mini"
+              type="primary"
+              @click="deleteRole(scope.$index, scope.row)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -172,19 +188,19 @@ export default {
     deleteRole(index, row) {
       this.roleInfo.id = row.id
       this.$confirm('是否要删除该角色', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          deleteRole(this.roleInfo).then(response => {
-            this.$message({
-              message: '删除成功',
-              type: 'success',
-              duration: 1000
-            })
-              this.getList()
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteRole(this.roleInfo).then(response => {
+          this.$message({
+            message: '删除成功',
+            type: 'success',
+            duration: 1000
           })
+          this.getList()
         })
+      })
     },
     addRole() {
       this.$router.push({ path: '/permission/addRole' })

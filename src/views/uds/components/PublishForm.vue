@@ -14,10 +14,10 @@
           size="medium"
         >
           <el-form-item label="上线原因" prop="title">
-            <el-input v-model="postParams.title" placeholder="本次的发布主题" />
+            <el-input v-model="postParams.title" placeholder="本次的发布主题"></el-input>
           </el-form-item>
           <el-form-item label="JIRA单号" prop="jiraId">
-            <el-input v-model="postParams.jiraId" />
+            <el-input v-model="postParams.jiraId"></el-input>
           </el-form-item>
           <el-form-item label="是否涉及核心数据">
             <el-select v-model="isCoreData">
@@ -45,16 +45,16 @@
             />
           </div>
           <el-form-item label="影响数据">
-            <el-input v-model="postParams.affectedData" />
+            <el-input v-model="postParams.affectedData"></el-input>
           </el-form-item>
           <el-form-item label="ReviewBoard 地址" prop="reviewBoardUrl">
-            <el-input v-model="postParams.reviewBoardUrl" />
+            <el-input v-model="postParams.reviewBoardUrl"></el-input>
           </el-form-item>
           <el-form-item label="上线步骤说明">
-            <el-input v-model="postParams.publishStep" type="textarea" />
+            <el-input v-model="postParams.publishStep" type="textarea"></el-input>
           </el-form-item>
           <el-form-item label="出错回滚步骤">
-            <el-input v-model="postParams.errRollback" type="textarea" />
+            <el-input v-model="postParams.errRollback" type="textarea"></el-input>
           </el-form-item>
         </el-form>
         <div class="create-publish-form-button">
@@ -188,7 +188,11 @@ export default {
       if (len > 0) {
         for (let i = 0; i < len; i++) {
           const pathValue = this.postParams.udsPublishItemList[i].codePath
-          if (pathValue === null || pathValue === undefined || pathValue.trim().length === 0) {
+          if (
+            pathValue === null ||
+            pathValue === undefined ||
+            pathValue.trim().length === 0
+          ) {
             this.$message({
               message: '代码分支路径 不能为空 ！！！',
               type: 'error',

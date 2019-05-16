@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%;">
-    <role-detail :is-edit="true" />
+    <role-detail :is-edit="true"></role-detail>
   </div>
 </template>
 <script>
@@ -10,7 +10,7 @@ export default {
   components: { RoleDetail },
   data() {
     return {
-        name: ''
+      name: ''
     }
   }
 }
