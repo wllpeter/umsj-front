@@ -58,7 +58,11 @@
           </el-form-item>
         </el-form>
         <div class="create-publish-form-button">
-          <el-button class="create-publish-form-button-button" type="primary" @click="savePulish()">保存发布单</el-button>
+          <el-button
+            class="create-publish-form-button-button"
+            type="primary"
+            @click="savePulish()"
+          >保存发布单</el-button>
         </div>
       </div>
     </el-card>
@@ -71,15 +75,13 @@ import { createPublish, publishDetail, updatePublish } from '@/api/uds'
 const defaultPostParams = {
   applyUser: '',
   jiraId: '',
-  codeType: 0,
-  codePath: '',
+  codeType: null,
+  codePath: null,
   title: '',
   affectedData: '',
   reviewBoardUrl: '',
   publishStep: '',
   errRollback: '',
-  codePaths: [],
-  codeTypes: [],
   udsPublishItemList: []
 }
 const defaultListQuery = {
@@ -169,7 +171,10 @@ export default {
       this.listQuery.id = this.id
       publishDetail(this.listQuery).then(response => {
         this.postParams = response.data
-        if (this.postParams.udsPublishItemList && this.postParams.udsPublishItemList.length > 0) {
+        if (
+          this.postParams.udsPublishItemList &&
+          this.postParams.udsPublishItemList.length > 0
+        ) {
           const len = this.postParams.udsPublishItemList.length
           for (let i = 0; i < len; i++) {
             this.postParams.udsPublishItemList[i]['uuid'] = getUuid()
@@ -177,53 +182,56 @@ export default {
         }
       })
     },
-    handleParams() {
-      // var itemList = {
-      //   id: null,
-      //   codePath: '',
-      //   codeType: ''
-      // }
-      // console.log(this.postParams.codeType + this.postParams.codePath)
-      // itemList.codePath = this.postParams.codePath
-      // itemList.codeType = this.postParams.codeType
-      // itemList.id = this.codeId
-      // this.postParams.udsPublishItemList.push(itemList)
-      // console.log(this.moduleInfo.length)
-      // for (let i = 0; i < this.moduleInfo.length; i++) {
-      //   var childItem = {
-      //     id: null,
-      //     codePath: '',
-      //     codeType: ''
-      //   }
-      //   this.postParams.udsPublishItemList.push(childItem)
-      // }
-      // this.postParams.udsPublishItemList.forEach(item => { console.log(item.codeType + '  ' + item.codePath + '  ' + item.id + '  ' + item.uuid) })
-    },
     savePulish() {
-      this.handleParams()
-      this.$confirm('是否要保存该发布单', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        if (this.isEdit) {
-          updatePublish(this.postParams).then(response => {
+      const len = this.postParams.udsPublishItemList.length
+      // 单独处理 发布项 代码分支路径
+      if (len > 0) {
+        for (let i = 0; i < len; i++) {
+          const pathValue = this.postParams.udsPublishItemList[i].codePath
+          if (pathValue === null || pathValue === undefined || pathValue.trim().length === 0) {
             this.$message({
-              type: 'success',
-              message: '更新成功',
-              duration: 1000
+              message: '代码分支路径 不能为空 ！！！',
+              type: 'error',
+              duration: 3000
             })
-            this.$router.push({ path: '/uds/index' })
+            return false
+          }
+        }
+      }
+      this.$refs.postParams.validate(valid => {
+        if (valid) {
+          this.$confirm('是否要保存该发布单', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            if (this.isEdit) {
+              updatePublish(this.postParams).then(response => {
+                this.$message({
+                  type: 'success',
+                  message: '更新成功',
+                  duration: 1000
+                })
+                this.$router.push({ path: '/uds/index' })
+              })
+            } else {
+              createPublish(this.postParams).then(response => {
+                this.$message({
+                  type: 'success',
+                  message: '创建成功',
+                  duration: 1000
+                })
+                this.$router.push({ path: '/uds/index' })
+              })
+            }
           })
         } else {
-          createPublish(this.postParams).then(response => {
-            this.$message({
-              type: 'success',
-              message: '创建成功',
-              duration: 1000
-            })
-            this.$router.push({ path: '/uds/index' })
+          this.$message({
+            message: '验证失败',
+            type: 'error',
+            duration: 1000
           })
+          return false
         }
       })
     },
@@ -260,22 +268,22 @@ export default {
 .publish-form {
   width: 100%;
   .create-publish-form {
-  margin-left: 10px;
-  .select-type {
-    // background-color: #f5f5f5;
-    // border: 1px solid #e3e3e3;
-    .select-type-button {
-      float: right;
+    margin-left: 10px;
+    .select-type {
+      // background-color: #f5f5f5;
+      // border: 1px solid #e3e3e3;
+      .select-type-button {
+        float: right;
+      }
+    }
+    .create-publish-form-button {
+      width: 100%;
+      margin-left: 25%;
+      .create-publish-form-button-button {
+        margin-left: 20%;
+      }
     }
   }
-  .create-publish-form-button {
-    width: 100%;
-    margin-left: 25%;
-    .create-publish-form-button-button {
-      margin-left: 50%;
-    }
-  }
-}
 }
 </style>
 

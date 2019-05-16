@@ -18,7 +18,7 @@
         @click="delteMoudle"
       />
     </el-form-item>
-    <el-form-item label="代码分支路径" prop="path">
+    <el-form-item label="代码分支路径" prop="codeType">
       <el-input v-model="selectPath" type="textarea" @change="changePath" />
     </el-form-item>
   </div>
