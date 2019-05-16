@@ -4,7 +4,7 @@
       <h3>提示</h3>
       <ol>
         <li>
-          发布单中带
+          发布单中发布项为必填、带
           <div class="create-publish-tip-star">*</div>的为必填项；
         </li>
         <li>

@@ -1,6 +1,6 @@
 <template>
   <div class="select-type">
-    <el-form-item label="代码类型" prop="codeType">
+    <el-form-item label="代码类型" prop="type">
       <el-select v-model="selectCodeType" @change="changeType">
         <el-option
           v-for="item in codeTypes"
@@ -18,7 +18,7 @@
         @click="delteMoudle"
       />
     </el-form-item>
-    <el-form-item label="代码分支路径" prop="codeType">
+    <el-form-item label="代码分支路径" prop="path">
       <el-input v-model="selectPath" type="textarea" @change="changePath" />
     </el-form-item>
   </div>
