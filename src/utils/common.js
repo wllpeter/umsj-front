@@ -110,3 +110,11 @@ export function formatStatus(satus) {
     }
     return result
 }
+
+export function formatNull(str) {
+    let result = str
+    if (str === '' || str === undefined) {
+        result = '无'
+    }
+    return result
+}
