@@ -3,18 +3,13 @@
     <div class="uds-detail-content">
       <div class="uds-detail-content-left">
         <el-card>
-          <!-- <el-steps :space="200" :active="2" finish-status="success">
-            <el-step title="新建"></el-step>
-            <el-step title="审核通过"></el-step>
-            <el-step title="发布完成"></el-step>
-          </el-steps>-->
           <div class="uds-detail-header">
             <div class="uds-detail-header-left">
               <h3>发布单详情</h3>
             </div>
             <div class="uds-detail-header-right">
               <el-button
-                v-if="status === 1 || status === 4"
+                v-if="(status === 1 || status === 4) && publishInfo.publishUser === username"
                 type="primary"
                 style="float: right;"
                 @click="updatePublish()"
@@ -26,7 +21,7 @@
             <div class="form-container-border">
               <el-row>
                 <el-col class="form-border form-left-bg font-small" :span="6">发布单ID</el-col>
-                <el-col class="form-border font-small" :span="18">{{ publishInfo.id }}</el-col>
+                <el-col class="form-border font-small" :span="18">{{ 'PO_' + publishInfo.id }}</el-col>
               </el-row>
               <el-row>
                 <el-col class="form-border form-left-bg font-small" :span="6">发布单主题</el-col>
@@ -48,8 +43,8 @@
                   :span="6"
                   style="height:60px;line-height:40px"
                 >状态</el-col>
-                <el-col class="form-border font-small" :span="18" style="height:60px">
-                  <el-button type="primary">{{ publishInfo.status | formatStatus }}</el-button>
+                <el-col class="form-border font-small" :span="18" style="height:60px;line-height:40px">
+                  <div class="btn-status">{{ publishInfo.status | formatStatus }}</div>
                 </el-col>
               </el-row>
               <el-row>
@@ -88,8 +83,8 @@
                   :span="18"
                 >{{ publishInfo.errRollback | formatNull }}</el-col>
               </el-row>
-              <div v-for="(item,index) in publishInfo.udsPublishItemList" :key="index">
-                <PublishItem :child-item="item"></PublishItem>
+              <div v-for="item in publishInfo.udsPublishItemList" :key="item.id">
+                <PublishItem :child-item="item" :parent-status="publishInfo.status"></PublishItem>
               </div>
             </div>
           </div>
@@ -104,6 +99,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import { formatStatus, formatNull } from '@/utils/common'
 import TimeLine from './components/TimeLine'
 import PublishItem from './components/PublishItem'
@@ -150,14 +146,18 @@ export default {
       id: 0,
       status: 0,
       uuid: '',
-      publishInfo: Object.assign({}, defaultPulishParams)
+      publishInfo: Object.assign({}, defaultPulishParams),
+      currentPeopleName: null
     }
+  },
+  computed: {
+    ...mapGetters(['username'])
   },
   created() {
     this.id = this.$route.params.id
     this.status = this.$route.params.status
-    console.log('this.id ' + this.id)
-    console.log('this.status ' + this.status)
+    // console.log('this.id ' + this.id)
+    // console.log('this.status ' + this.status)
     // 获取表单信息
     this.getPublishInfo()
   },
@@ -185,9 +185,10 @@ export default {
     margin-left: 5px;
     width: 100%;
     height: 85%;
-    display: flex;
+    // display: flex;
     .uds-detail-content-left {
-      flex: 2;
+      // flex: 2;
+      width: 63%;
       .uds-detail-header {
         width: 100%;
         display: flex;
@@ -204,7 +205,11 @@ export default {
     }
     .uds-detail-content-right {
       margin-left: 10px;
-      flex: 1;
+      // flex: 1;
+      width: 30%;
+      position: fixed;
+      right: 10px;
+      top: 62px;
     }
   }
 }
@@ -220,5 +225,13 @@ export default {
 }
 .form-left-bg {
   background: #f2f6fc;
+}
+.btn-status {
+  color: #006400;
+  width: 200px;
+  height: 60px;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: left;
 }
 </style>
