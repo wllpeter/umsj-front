@@ -2,10 +2,14 @@
   <div class="operate">
     <div class="publish">
       <h4>发布操作：</h4>
-      <el-button type="primary" icon="el-icon-position">提交审核</el-button>
-      <el-button type="warning" icon="el-icon-refresh-left">撤回提审</el-button>
-      <el-button type="danger" icon="el-icon-close">取消发布</el-button>
-      <el-button type="primary" icon="el-icon-finished">完成发布</el-button>
+      <div style="width:100%;">
+        <el-button type="primary" icon="el-icon-position">提交审核</el-button>
+        <el-button type="warning" icon="el-icon-refresh-left">撤回提审</el-button>
+      </div>
+      <div style="width:100%;margin-top:5px">
+        <el-button type="danger" icon="el-icon-close">取消发布</el-button>
+        <el-button type="primary" icon="el-icon-finished">完成发布</el-button>
+      </div>
     </div>
     <div class="audit">
       <h4>审核操作：</h4>
