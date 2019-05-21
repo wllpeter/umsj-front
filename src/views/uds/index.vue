@@ -81,7 +81,7 @@
         </el-table-column>
         <el-table-column label="状态" width="120" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" plain>{{ scope.row.status | formatStatus }}</el-button>
+            <el-button type="primary" style="width:100px;" plain>{{ scope.row.status | formatStatus }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
