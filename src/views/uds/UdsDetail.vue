@@ -92,6 +92,7 @@
       </div>
       <div class="uds-detail-content-right">
         <el-card>
+          <PublishOperate></PublishOperate>
           <TimeLine></TimeLine>
         </el-card>
       </div>
@@ -102,6 +103,7 @@
 import { mapGetters } from 'vuex'
 import { formatStatus, formatNull } from '@/utils/common'
 import TimeLine from './components/TimeLine'
+import PublishOperate from './components/PublishOperate'
 import PublishItem from './components/PublishItem'
 import { publishDetail } from '@/api/uds'
 const defaultPulishParams = {
@@ -139,7 +141,7 @@ export default {
       return formatNull(str)
     }
   },
-  components: { TimeLine, PublishItem },
+  components: { TimeLine, PublishItem, PublishOperate },
   data() {
     return {
       listQuery: Object.assign({}, defaultListQuery),
