@@ -79,7 +79,7 @@
                 <el-col
                   class="form-border font-small"
                   :span="18"
-                >{{ publishInfo.publishType | formatNull }}</el-col>
+                >{{ publishInfo.publishStep | formatNull }}</el-col>
               </el-row>
               <el-row>
                 <el-col class="form-border form-left-bg font-small" :span="6">出错回滚步骤</el-col>
@@ -88,7 +88,7 @@
                   :span="18"
                 >{{ publishInfo.errRollback | formatNull }}</el-col>
               </el-row>
-              <div v-for="item in publishInfo.udsPublishItemList" :key="item.uuid">
+              <div v-for="(item,index) in publishInfo.udsPublishItemList" :key="index">
                 <PublishItem :child-item="item"></PublishItem>
               </div>
             </div>

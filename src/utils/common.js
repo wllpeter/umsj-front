@@ -118,3 +118,17 @@ export function formatNull(str) {
     }
     return result
 }
+
+export function formatItemStatus(itemSatus) {
+    let result = ''
+    if (itemSatus === 1) {
+        result = '未发布'
+    }
+    if (itemSatus === 2) {
+        result = '发布成功'
+    }
+    if (itemSatus === 3) {
+        result = '发布失败'
+    }
+    return result
+}

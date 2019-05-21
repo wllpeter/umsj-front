@@ -9,7 +9,7 @@
           style="height:60px;line-height:40px"
         >发布状态</el-col>
         <el-col class="form-border font-small" :span="18" style="height:60px">
-          <el-button type="primary">{{ item.state }}</el-button>
+          <el-button :type="typeFlag">{{ item.state | formatItemStatus }}</el-button>
         </el-col>
       </el-row>
 
@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import { formatNull } from '@/utils/common'
+import { formatNull, formatItemStatus } from '@/utils/common'
 const defaultItem = {
   codePath: 'string',
   codeType: 'string',
@@ -52,6 +52,9 @@ export default {
   filters: {
     formatNull(str) {
       return formatNull(str)
+    },
+    formatItemStatus(itemStatus) {
+      return formatItemStatus(itemStatus)
     }
   },
    props: {
@@ -62,11 +65,18 @@ export default {
   },
   data() {
     return {
-      item: Object.assign({}, defaultItem)
+      item: Object.assign({}, defaultItem),
+      typeFlag: 'primary'
     }
   },
   created() {
     this.item = this.childItem
+    if (this.item.state === 1) {
+        this.typeFlag = 'success'
+    }
+    if (this.item.state === 3) {
+        this.typeFlag = 'danger'
+    }
   },
   methods: {}
 }
