@@ -1,8 +1,18 @@
 <template>
-  <div class="uds-item-content-left-content">
+  <div
+    v-loading="loading"
+    class="uds-item-content-left-content"
+    element-loading-text="正在发布中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+  >
     <div>
       <span class="font-title-medium">发布项信息:</span>
-      <el-button v-if="item.state === 1 && pStatus === 3" type="primary" style="margin-left: 20px;">发布</el-button>
+      <el-button
+        v-if="item.state === 1 && pStatus === 3"
+        type="primary"
+        style="margin-left: 20px;"
+      >发布</el-button>
     </div>
     <div class="form-container-border">
       <el-row>
@@ -74,18 +84,22 @@ export default {
     return {
       item: Object.assign({}, defaultItem),
       pStatus: null,
-      fontColor: 'color: #7FFFD4;'
+      fontColor: 'color: #7FFFD4;',
+      loading: false
     }
   },
   created() {
     this.item = this.childItem
     this.pStatus = this.parentStatus
+    if (this.item.state === 1) {
+      this.loading = true
+    }
     // 颜色区分
     if (this.item.state === 2) {
-        this.fontColor = 'color: #006400;'
+      this.fontColor = 'color: #006400;'
     }
     if (this.item.state === 3) {
-        this.fontColor = 'color: #FF0000;'
+      this.fontColor = 'color: #FF0000;'
     }
   },
   methods: {}
