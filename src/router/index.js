@@ -176,6 +176,41 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/mark',
+    component: Layout,
+    redirect: '/mark/index',
+    alwaysShow: true, // will always show the root menu
+    name: 'Mark',
+    meta: {
+      title: 'mark',
+      icon: 'uds',
+      roles: ['uds'] // you can set roles in root nav
+    },
+    children: [
+      {
+      path: 'index',
+      component: () => import('@/views/mark/index'),
+      name: 'markMangement',
+      hidden: false,
+      meta: {
+        title: 'markMangement',
+        icon: 'uds-list',
+        roles: ['udsPublish'] // or you can only set roles in sub nav
+      }
+    },
+      {
+        path: 'add',
+        component: () => import('@/views/mark/add'),
+        name: 'add',
+        hidden: false,
+        meta: {
+          title: 'markAdd',
+          icon: 'add-uds'
+        }
+      }
+    ]
+  },
 
   { path: '*', redirect: '/404', hidden: true }
 ]
