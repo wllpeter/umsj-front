@@ -11,6 +11,7 @@ export default {
     mark: 'Markdown',
     markAdd: '新增文章',
     markMangement: '文章列表',
+    articleDetail: '文章详情',
     uds: 'UDS',
     udsMangement: '发布单管理',
     udsCreate: '新建发布单',

@@ -7,3 +7,11 @@ export function saveMarkdown(data) {
         data: data
     })
 }
+
+export function articleDetail(params) {
+    return request({
+        url: '/mark/articleDetail',
+        method: 'get',
+        params: params
+    })
+}

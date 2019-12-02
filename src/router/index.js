@@ -208,6 +208,16 @@ export const asyncRoutes = [
           title: 'markAdd',
           icon: 'add-uds'
         }
+      },
+      {
+        path: 'detail',
+        component: () => import('@/views/mark/detail'),
+        name: 'detail',
+        hidden: false,
+        meta: {
+          title: 'articleDetail',
+          icon: 'add-uds'
+        }
       }
     ]
   },
