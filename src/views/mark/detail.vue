@@ -4,6 +4,7 @@
 
 <script>
 import { articleDetail } from '@/api/mark'
+import 'mavon-editor/dist/css/index.css'
 const defaultListQuery = {
   id: 0
 }
@@ -20,7 +21,7 @@ export default {
     }
   },
   mounted() {
-    this.id = 2
+    this.id = 3
     this.initModuleInfo(this.id)
   },
   methods: {
